@@ -22,6 +22,7 @@ private slots:
 
 
 private:
+    QString graphs;
     Ui::MainWindow *ui;
     QMenu *File;
     QAction *saveAction;
