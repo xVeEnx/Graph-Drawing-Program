@@ -7,15 +7,26 @@
 #include <QFile>
 #include <QLayout>
 #include <QMessageBox>
+#include <QPushButton>
+
 //#include <graphwindow.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     QWidget *widget=new QWidget;
-    resize(840, 620);
-     _qLayout.addWidget(&_qGraphWindow, 0, 0);
-     widget->setLayout(&_qLayout);
+    resize(1280, 620);
+    _qLayoutLeft=new QHBoxLayout;
+    _qLayoutRight=new QHBoxLayout;
+    _qFinalLayout=new QHBoxLayout;
+    _qGraphWindow=new graphWindow(this);
+    _qGraphManager=new GraphManaging(this);
+
+    _qLayoutLeft->addWidget(_qGraphWindow);
+    _qLayoutRight->addWidget(_qGraphManager);
+    _qFinalLayout->addLayout(_qLayoutLeft);
+    _qFinalLayout->addLayout(_qLayoutRight);
+     widget->setLayout(_qFinalLayout);
      setCentralWidget(widget);
      createMenus();
 

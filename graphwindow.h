@@ -15,11 +15,9 @@ protected:
     virtual void paintEvent(QPaintEvent *event);
 
 private:
-     QWidget *q_widget;
     QMenuBar *menuBar;
     QRect m_rectangle;
     QVector<QRect> graphsVect;
-    QHBoxLayout horizontalLayout;
 
 };
 

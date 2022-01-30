@@ -6,6 +6,8 @@
 #include <QLayout>
 #include <QSlider>
 #include <graphwindow.h>
+#include <graphmanaging.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -27,11 +29,14 @@ private slots:
 private:
 
     void createMenus();
+    GraphManaging* _qGraphManager;
     QString graphs;
     Ui::MainWindow *ui;
     QMenu *File;
-    QGridLayout _qLayout;
-    graphWindow _qGraphWindow;
+    QHBoxLayout* _qLayoutLeft;
+    QHBoxLayout* _qLayoutRight;
+    QHBoxLayout* _qFinalLayout;
+    graphWindow* _qGraphWindow;
     QAction *saveAction;
     QAction *openAction;
     QAction *exportAction;
