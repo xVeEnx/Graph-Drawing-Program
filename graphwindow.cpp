@@ -3,26 +3,17 @@
 #include <QRect>
 #include <QLayout>
 #include <mainwindow.h>
-graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
+graphWindow::graphWindow(QWidget *parent): QFrame(parent)
 {
-    //QWidget *widget= new QWidget;
-
-    //layout->add
-   // auto options=new MainWindow(this);
-    //QMenuBar *menuBar=new QMenuBar(this);
-  //  menuBar->addMenu("&File");
-    //QHBoxLayout* leftSide= new QHBoxLayout();
-  //  m_rectangle= QRect(15,15,100,100);
     setFrameStyle(Box | Plain);
-
-
+    //horizontalLayout();
 }
 void graphWindow::paintEvent(QPaintEvent *event)
 {
-
+    graphsVect.push_back(QRect(0,0,100,50));
         QPainter painter(this);
-    m_rectangle= QRect(0,0,300,300);
-    painter.drawRect(m_rectangle);
+        for(int i=0;i<graphsVect.size();i++)
+    painter.drawRect(graphsVect[i]);
 
 }
 
