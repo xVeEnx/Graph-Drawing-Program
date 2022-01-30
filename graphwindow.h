@@ -3,15 +3,20 @@
 
 #include <QDockWidget>
 #include <QObject>
-#include <QWidget>
+#include <QFrame>
 #include <QRect>
-
-class graphWindow
+#include <QMenuBar>
+class graphWindow : public QFrame
 {
-//Q_OBJECT
 public:
-    QRect q1;
-    graphWindow();
+    graphWindow(QWidget *parent=nullptr);
+protected:
+    virtual void paintEvent(QPaintEvent *event);
+
+private:
+    QMenuBar *menuBar;
+    QRect m_rectangle;
+
 
 };
 
