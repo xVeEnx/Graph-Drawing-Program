@@ -26,9 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
     _qLayoutRight->addWidget(_qGraphManager);
     _qFinalLayout->addLayout(_qLayoutLeft);
     _qFinalLayout->addLayout(_qLayoutRight);
+
      widget->setLayout(_qFinalLayout);
      setCentralWidget(widget);
      createMenus();
+     QObject::connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
+                            _qGraphWindow,SLOT(graphAdding()));
 
 }
 void MainWindow::createMenus()

@@ -1,49 +1,41 @@
 #include "graphmanaging.h"
+#include "QIntValidator"
 
 GraphManaging::GraphManaging(QWidget *parent)
     : QWidget(parent)
 {
 
-    _qLabelHeight=new QLabel();
-    setQLabel(this,"Height");
+
 
     _qButtons=new QPushButton;
     _qButtons->setText(tr("Add"));
+    _qButtons->setMaximumSize(200,50);
 
      _qTextHeightBox=new QLineEdit();
-   //  _qTextHeightBox->setContentsMargins(-1,-1,-1,-1);
+     _qTextHeightBox->setValidator( new QIntValidator(0,999999999, this));
 
-      _qLabelLayout=new QHBoxLayout;
-      _qLabelLayout->addWidget(_qLabelHeight),Qt::AlignTop;
-      _qLabelLayout->addWidget(_qTextHeightBox,Qt::AlignTop);
-      _qLabelLayout->setSpacing(0);
+      _qLabelLayout=new QFormLayout();
+      _qLabelLayout->setSpacing(10);
+      _qLabelLayout->addRow(tr("Add graph"),_qTextHeightBox);
+      _qLabelLayout->setSpacing(10);
 
-      _qVerticalLayout=new QVBoxLayout;
-      _qVerticalLayout->addLayout(_qLabelLayout,Qt::AlignTop);
-      _qVerticalLayout->setSpacing(0);
-      //_qVerticalLayout->setMargin(0);
+      _qLabelLayout->addWidget(_qButtons);
 
 
 
-      _qVerticalLayout->addLayout(_qLabelLayout,Qt::AlignTop);
-      _qVerticalLayout->addWidget(_qButtons);
-
-
-        setLayout(_qVerticalLayout);
+        setLayout(_qLabelLayout);
         setFixedSize(280,620);
 
 }
-void GraphManaging::paintEvent(QPaintEvent *event)
+QPushButton* GraphManaging::getPushButton()
 {
-//    auto SBM=new QLabel(this);
-
-//    QPainter painter(this)
-////    painter.drawRect(QRect(0,0,100,50));
-//    painter.draw
+    return _qButtons;
 }
-void GraphManaging::setQLabel(QWidget *parent,QString str)
+QString GraphManaging::getGraphHeight()
 {
-                _qLabelHeight->setText(str);
-                _qLabelHeight->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-                _qLabelHeight->setFixedSize(100,25);
+    return _qTextHeightBox->text();
+}
+void GraphManaging::clearGraphHeight()
+{
+    _qTextHeightBox->setText("");
 }

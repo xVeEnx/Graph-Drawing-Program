@@ -1,4 +1,4 @@
-#include "graphwindow.h"
+﻿#include "graphwindow.h"
 #include <QPainter>
 #include <QRect>
 #include <QLayout>
@@ -11,6 +11,7 @@ graphWindow::graphWindow(QWidget *parent): QFrame(parent)
 
     setFixedSize(1000,620);
 }
+
 void graphWindow::paintEvent(QPaintEvent *event)
 {
     graphsVect.push_back(QRect(-100,0,100,50));
@@ -23,3 +24,8 @@ void graphWindow::paintEvent(QPaintEvent *event)
 
 }
 
+void graphWindow::graphAdding()
+{
+   GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
+   qDebug()<<manager->getGraphHeight();
+}

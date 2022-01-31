@@ -11,25 +11,26 @@
 #include <QLabel>
 #include <QTranslator>
 #include <QLineEdit>
+#include <QFormLayout>
 class GraphManaging : public QWidget
 {
     Q_OBJECT
 public:
     explicit GraphManaging(QWidget *parent = nullptr);
-protected:
-    virtual void paintEvent(QPaintEvent *event);
+    QPushButton*  getPushButton();
+    QString getGraphHeight();
+    void clearGraphHeight();
 signals:
+//        void addGraph(int sizeOfGraph);
+private slots:
+
 
 private:
-     void setQLabel(QWidget *parent,QString str);
-      QPushButton*  _qButtons;
-     QLabel *_qLabelHeight;
-     QHBoxLayout* _qLabelLayout;
-     QHBoxLayout* _qLabelLayout2;
-     QVBoxLayout* _qVerticalLayout;
-     QLineEdit* _qTextWidthBox;
-     QLineEdit* _qTextHeightBox;
 
+     QPushButton*  _qButtons;
+     QFormLayout* _qLabelLayout;
+     QLineEdit* _qTextHeightBox;
+     QFormLayout* _qFormLayout;
 
 };
 
