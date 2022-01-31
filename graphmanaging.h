@@ -10,7 +10,7 @@
 #include <QPainter>
 #include <QLabel>
 #include <QTranslator>
-
+#include <QLineEdit>
 class GraphManaging : public QWidget
 {
     Q_OBJECT
@@ -22,14 +22,13 @@ signals:
 
 private:
      void setQLabel(QWidget *parent,QString str);
-      QPushButton  _qButtons[2];
-     QLabel *_qLabelWidth;
+      QPushButton*  _qButtons;
      QLabel *_qLabelHeight;
-     QGridLayout* _qButtonLayout;
      QHBoxLayout* _qLabelLayout;
      QHBoxLayout* _qLabelLayout2;
      QVBoxLayout* _qVerticalLayout;
-
+     QLineEdit* _qTextWidthBox;
+     QLineEdit* _qTextHeightBox;
 
 
 };
