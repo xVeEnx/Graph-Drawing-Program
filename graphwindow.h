@@ -22,6 +22,8 @@ private:
     QMenuBar *menuBar;
     QRect m_rectangle;
     QVector<QRect> graphsVect;
+    int _qSpace;
+    int _qWidth;
 
 };
 
