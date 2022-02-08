@@ -13,6 +13,7 @@ GraphManaging::GraphManaging(QWidget *parent)
 
     _qLabelLayout=new QFormLayout();
     _qLabelLayout->setSpacing(10);
+    _qTextHeightBox->setText("1");
     _qLabelLayout->addRow(tr("Add graph"),_qTextHeightBox);
     _qLabelLayout->addWidget(_qButtons);
 
@@ -30,5 +31,5 @@ QString GraphManaging::getGraphHeight()
 }
 void GraphManaging::clearGraphHeight()
 {
-    _qTextHeightBox->setText("");
+    _qTextHeightBox->setText("1");
 }

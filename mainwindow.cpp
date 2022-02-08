@@ -27,17 +27,17 @@ MainWindow::MainWindow(QWidget *parent)
     _qFinalLayout->addLayout(_qLayoutLeft);
     _qFinalLayout->addLayout(_qLayoutRight);
 
-     widget->setLayout(_qFinalLayout);
-     setCentralWidget(widget);
-     createMenus();
-     QObject::connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
-                            _qGraphWindow,SLOT(graphAdding()));
+    widget->setLayout(_qFinalLayout);
+    setCentralWidget(widget);
+    createMenus();
+    QObject::connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
+                     _qGraphWindow,SLOT(graphAdding()));
 
 }
 void MainWindow::createMenus()
 {
     this->graphs="For now empty";
-   // ui->setupUi(this);
+    // ui->setupUi(this);
     File=menuBar()->addMenu("File");
     saveAction=new QAction("Save");
     openAction=new QAction("Open");
@@ -57,11 +57,11 @@ void MainWindow::save()
     if(fileName!="")
     {
         QFile file(fileName);
-        if(!file.open(QIODevice::WriteOnly)){
-           file.close();
-           QMessageBox messageBox;
-           messageBox.critical(0,"Error","An error has occured !");
-           messageBox.setFixedSize(500,200);
+        if(!file.open(QIODevice::WriteOnly)) {
+            file.close();
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","An error has occured !");
+            messageBox.setFixedSize(500,200);
         }
         else{
             QTextStream stream(&file);
@@ -77,16 +77,16 @@ void MainWindow::open()
     if(fileName!="")
     {
         QFile file(fileName);
-        if(!file.open(QIODevice::ReadOnly)){
+        if(!file.open(QIODevice::ReadOnly)) {
 
-           file.close();
-           QMessageBox messageBox;
-           messageBox.critical(0,"Error","An error has occured !");
-           messageBox.setFixedSize(500,200);
+            file.close();
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","An error has occured !");
+            messageBox.setFixedSize(500,200);
         }
         else{
             QTextStream stream(&file);
-                graphs=stream.readAll();
+            graphs=stream.readAll();
             file.close();
         }
     }

@@ -19,12 +19,15 @@ protected:
 public slots:
     void graphAdding();
 private:
+    void drawLabels();
+    QGridLayout *_qMainLayout;
     QMenuBar *menuBar;
     QRect m_rectangle;
     QVector<QRect> graphsVect;
+    QVector<QLine> _qLinia;
     int _qSpace;
     int _qWidth;
-
+    int _qScale;
 };
 
 #endif // GRAPHWINDOW_H
