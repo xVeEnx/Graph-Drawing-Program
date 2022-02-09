@@ -9,31 +9,30 @@
 #include <QHBoxLayout>
 #include <QObject>
 #include <graphmanaging.h>
+#include <graphspace.h>
 class graphWindow : public QFrame
 {
     Q_OBJECT
 public:
     graphWindow(QWidget *parent=nullptr);
+    graphSpace* getGraphSpace();
 protected:
-    virtual void paintEvent(QPaintEvent *event);
+//    virtual void paintEvent(QPaintEvent *event);
 public slots:
-    void graphAdding();
+    //void graphAdding();
 private:
     void drawLabels();
     QHBoxLayout* _qLayout;
     QHBoxLayout* _qHorizontalLayout;
     QVBoxLayout* _qVerticalLayout;
     QWidget* _qLabelWidget;
-    QWidget* _qGraphWidget;
+    graphSpace *_qGraphWidget;
     QWidget* _qFooterWidget;
     QGridLayout *_qMainLayout;
     QMenuBar *menuBar;
     QRect m_rectangle;
-    QVector<QRect> graphsVect;
-    QVector<QLine> _qLinia;
-    int _iSpace;
-    int _iWidth;
-    int _iScale;
+
+
 };
 
 #endif // GRAPHWINDOW_H

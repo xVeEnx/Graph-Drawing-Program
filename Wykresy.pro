@@ -10,12 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     graphmanaging.cpp \
+    graphspace.cpp \
     graphwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     graphmanaging.h \
+    graphspace.h \
     graphwindow.h \
     mainwindow.h
 

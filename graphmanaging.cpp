@@ -4,6 +4,7 @@
 GraphManaging::GraphManaging(QWidget *parent)
     : QWidget(parent)
 {
+
     _qButtons=new QPushButton;
     _qButtons->setText(tr("Add"));
     _qButtons->setMaximumSize(200,50);
