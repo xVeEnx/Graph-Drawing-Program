@@ -20,14 +20,20 @@ public slots:
     void graphAdding();
 private:
     void drawLabels();
+    QHBoxLayout* _qLayout;
+    QHBoxLayout* _qHorizontalLayout;
+    QVBoxLayout* _qVerticalLayout;
+    QWidget* _qLabelWidget;
+    QWidget* _qGraphWidget;
+    QWidget* _qFooterWidget;
     QGridLayout *_qMainLayout;
     QMenuBar *menuBar;
     QRect m_rectangle;
     QVector<QRect> graphsVect;
     QVector<QLine> _qLinia;
-    int _qSpace;
-    int _qWidth;
-    int _qScale;
+    int _iSpace;
+    int _iWidth;
+    int _iScale;
 };
 
 #endif // GRAPHWINDOW_H
