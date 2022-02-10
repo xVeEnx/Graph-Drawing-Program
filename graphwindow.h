@@ -10,6 +10,8 @@
 #include <QObject>
 #include <graphmanaging.h>
 #include <graphspace.h>
+#include <scalelayout.h>
+
 class graphWindow : public QFrame
 {
     Q_OBJECT
@@ -22,10 +24,10 @@ public slots:
     //void graphAdding();
 private:
     void drawLabels();
+    scaleLayout* _qScaleWidget;
     QHBoxLayout* _qLayout;
     QHBoxLayout* _qHorizontalLayout;
     QVBoxLayout* _qVerticalLayout;
-    QWidget* _qLabelWidget;
     graphSpace *_qGraphWidget;
     QWidget* _qFooterWidget;
     QGridLayout *_qMainLayout;

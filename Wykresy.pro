@@ -13,13 +13,15 @@ SOURCES += \
     graphspace.cpp \
     graphwindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    scalelayout.cpp
 
 HEADERS += \
     graphmanaging.h \
     graphspace.h \
     graphwindow.h \
-    mainwindow.h
+    mainwindow.h \
+    scalelayout.h
 
 FORMS += \
     mainwindow.ui

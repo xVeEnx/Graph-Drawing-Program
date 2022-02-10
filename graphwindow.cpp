@@ -14,13 +14,17 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
       QPushButton *button4 = new QPushButton("Four");
       QPushButton *button5 = new QPushButton("Five");
 
+      setFrameStyle(Box|Plain);
+      setLineWidth(3);
+      setFixedSize(1000,620);
+
       _qLayout =new QHBoxLayout();
       _qHorizontalLayout=new QHBoxLayout();
       _qVerticalLayout=new QVBoxLayout();
-      _qLabelWidget=new QWidget();
       _qGraphWidget=new graphSpace();
+      _qScaleWidget=new scaleLayout();
       _qFooterWidget=new QWidget();
-     _qLabelWidget->setFixedSize(100,600);
+     _qScaleWidget->setFixedSize(100,550);
      _qGraphWidget->setMinimumSize(1000,300);
      _qGraphWidget->setMaximumSize(1000,550);
      _qFooterWidget->setFixedSize(1000,25);
@@ -33,49 +37,21 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
     // button2->show();
     // button3->setParent(_qFooterWidget);
     // button3->show();
-     _qHorizontalLayout->addWidget(_qLabelWidget);
+     _qHorizontalLayout->addWidget(_qScaleWidget);
      _qVerticalLayout->setSpacing(10);
      _qVerticalLayout->addWidget(_qGraphWidget);
      _qVerticalLayout->addWidget(_qFooterWidget);
      _qLayout->addLayout(_qHorizontalLayout);
      _qLayout->addLayout(_qVerticalLayout);
 
-    setFrameStyle(Box|Plain);
-    setLineWidth(3);
-    setFixedSize(1000,620);
+
 
     //drawLabels();
     setLayout(_qLayout);
 
 }
 
-//void graphWindow::paintEvent(QPaintEvent *event)
-//{
-//    qDebug()<<_qGraphWidget<<" <-graphwidget \nthis:"<<this;
 
-//}
-
-//void graphWindow::graphAdding()
-//{
-
-//}
-void graphWindow::drawLabels()
-{
-//    _qMainLayout= new QGridLayout;
-////    _qMainLayout->setSpacing(0);
-//    _qMainLayout->setContentsMargins(1,1,1,1);
-
-////   _qMainLayout->addWidget(new QLabel("12"),0,0);
-////   _qMainLayout->addWidget(new QLabel("12"),1,0);
-////   _qMainLayout->addWidget(new QLabel("12"),2,0);
-////   _qMainLayout->addWidget(new QLabel("12"),3,0);
-//   QSpacerItem *spc= new QSpacerItem(40,20,QSizePolicy::Minimum,QSizePolicy::Expanding);
-//    _qMainLayout->addItem(spc,4,0);
-//    //pozniej odkomentowac - odzzielanie linia labelow _qLinia.push_back(QLine(100,0,100,QWidget::height()));
-
-//    _qMainLayout->setVerticalSpacing(50);
-//     setLayout(_qMainLayout);
-}
 graphSpace *graphWindow::getGraphSpace()
 {
     return _qGraphWidget;
