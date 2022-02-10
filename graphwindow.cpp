@@ -24,10 +24,11 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
       _qGraphWidget=new graphSpace();
       _qScaleWidget=new scaleLayout();
       _qFooterWidget=new QWidget();
-     _qScaleWidget->setFixedSize(100,550);
-     _qGraphWidget->setMinimumSize(1000,300);
-     _qGraphWidget->setMaximumSize(1000,550);
-     _qFooterWidget->setFixedSize(1000,25);
+      _qScaleWidget->setFixedSize(100,550);
+     _qGraphWidget->setFixedSize(1000,550);
+     qDebug()<<_qScaleWidget->height()<<"scalewidget  size";
+     qDebug()<<_qGraphWidget->height()<<"graphwidget  size";
+     _qFooterWidget->setMinimumSize(1000,25);
 //     QWidget* _qLabelWidget;
 //     QWidget* _qGraphWidget;
 //     QWidget* _qFooterWidget;
@@ -38,7 +39,7 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
     // button3->setParent(_qFooterWidget);
     // button3->show();
      _qHorizontalLayout->addWidget(_qScaleWidget);
-     _qVerticalLayout->setSpacing(10);
+     _qVerticalLayout->setSpacing(0);
      _qVerticalLayout->addWidget(_qGraphWidget);
      _qVerticalLayout->addWidget(_qFooterWidget);
      _qLayout->addLayout(_qHorizontalLayout);
@@ -48,7 +49,8 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
 
     //drawLabels();
     setLayout(_qLayout);
-
+    qDebug()<<_qScaleWidget->height()<<"at the end scalewidget  size";
+    qDebug()<<_qGraphWidget->height()<<"at the end graphwidget  size";
 }
 
 

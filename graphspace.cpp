@@ -9,7 +9,7 @@ graphSpace::graphSpace(QWidget *parent)
     _iScale=100;
     double height=this->height()/10;
 
-    qDebug()<<height;
+    qDebug()<<this->height()<<"height ins graphspace";
     for(int i=10; i>=0; i--)
     {
         _qLinia.push_back(QLine(0,height*i+1,1001,height*i+1));
