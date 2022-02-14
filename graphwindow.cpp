@@ -8,11 +8,6 @@
 #include <QSizePolicy>
 graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
 {
-    QPushButton *button1 = new QPushButton("One");
-      QPushButton *button2 = new QPushButton("Two");
-      QPushButton *button3 = new QPushButton("Three");
-      QPushButton *button4 = new QPushButton("Four");
-      QPushButton *button5 = new QPushButton("Five");
 
       setFrameStyle(Box|Plain);
       setLineWidth(3);
@@ -24,8 +19,8 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
       _qGraphWidget=new graphSpace();
       _qScaleWidget=new scaleLayout();
       _qFooterWidget=new QWidget();
-      _qScaleWidget->setFixedSize(100,550);
-     _qGraphWidget->setFixedSize(1000,550);
+      _qScaleWidget->setFixedSize(100,600);
+     _qGraphWidget->setFixedSize(1000,500);
      qDebug()<<_qScaleWidget->height()<<"scalewidget  size";
      qDebug()<<_qGraphWidget->height()<<"graphwidget  size";
      _qFooterWidget->setMinimumSize(1000,25);

@@ -19,6 +19,8 @@ public slots:
 private:
     QVector<QRect> graphsVect;
     QVector<QLine> _qLinia;
+    QVector<QColor> _qColor;
+
     int _iWidth;
     int _iScale;
 };

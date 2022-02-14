@@ -13,6 +13,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 signals:
 private:
+    QVector<QLine> _qLinia;
     QVector<QStaticText> _qText;
     int _iScale;
     scaleLayout* _qScaleLayout;
