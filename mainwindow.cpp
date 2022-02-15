@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     createMenus();
     QObject::connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
                      _qGraphWindow->getGraphSpace(),SLOT(addGraphs()));
-
+    QObject::connect(_qGraphWindow->getGraphSpace(),SIGNAL(layoutSetting()),
+                    _qGraphWindow->getGraphFooter(),SLOT(setRects()));
 }
 void MainWindow::createMenus()
 {

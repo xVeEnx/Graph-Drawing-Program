@@ -20,6 +20,7 @@ public:
     explicit GraphManaging(QWidget *parent = nullptr);
     QPushButton*  getPushButton();
     QString getGraphHeight();
+    QString getGraphName();
     QColor getGraphColor();
     void clearGraphHeight();
 signals:

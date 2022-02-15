@@ -11,17 +11,15 @@
 #include <graphmanaging.h>
 #include <graphspace.h>
 #include <scalelayout.h>
-
+#include <graphfooter.h>
 class graphWindow : public QFrame
 {
     Q_OBJECT
 public:
     graphWindow(QWidget *parent=nullptr);
     graphSpace* getGraphSpace();
-protected:
-//    virtual void paintEvent(QPaintEvent *event);
-public slots:
-    //void graphAdding();
+    GraphFooter* getGraphFooter();
+
 private:
     void drawLabels();
     scaleLayout* _qScaleWidget;
@@ -29,7 +27,7 @@ private:
     QHBoxLayout* _qHorizontalLayout;
     QVBoxLayout* _qVerticalLayout;
     graphSpace *_qGraphWidget;
-    QWidget* _qFooterWidget;
+    GraphFooter* _qFooterWidget;
     QGridLayout *_qMainLayout;
     QMenuBar *menuBar;
     QRect m_rectangle;

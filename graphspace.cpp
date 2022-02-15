@@ -1,42 +1,51 @@
 #include "graphspace.h"
 
-graphSpace::graphSpace(QWidget *parent)
-    : QWidget{parent},_iWidth{15},_iSpace{5},_iScale{1}
+graphSpace::graphSpace(QWidget *parent,QSize size)
+    : QWidget{parent},_iWidth{80},_iSpace{5},_iScale{1}
 {
-    double height=50*_iScale;
+    setFixedSize(size);
+    double height=size.height()/10;
 
     for(int i=10; i>=0; i--)
     {
-        _qLinia.push_back(QLine(0,height*i,1001,height*i));
+        _qLine.push_back(QLine(0,height*i,size.width(),height*i));
     }
 }
 void graphSpace::addGraphs()
 {
-    int height=QWidget::height();
+
+
     GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
     int graphHeight=(manager->getGraphHeight()).toInt();
 
     if(graphHeight<1) return;
     _qColor.push_back(manager->getGraphColor());
-
+    _qName.push_back(QStaticText(manager->getGraphName()));
     manager->clearGraphHeight();
 
     int numOfGraphs= graphsVect.size();
-
+    int height=QWidget::height();
     graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-graphHeight));
-    //graphsVect[1].
+    emit layoutSetting();
     update();
 }
 void graphSpace::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-   // painter.setBrush(Qt::yellow);
-    for(int i=0; i<graphsVect.size(); i++)
-    {
-         //painter.setBrush(QColor::fromRgbF(i*20,1,115));
-        painter.fillRect(graphsVect[i],_qColor[i]);
-    }
+    painter.setPen(Qt::gray);
+    for(int i=0; i<_qLine.size(); i++) painter.drawLine(_qLine[i]);
+
+    painter.setPen(Qt::black);
+    for(int i=0; i<graphsVect.size(); i++)painter.fillRect(graphsVect[i],_qColor[i]);
+
     for(int i=0; i<graphsVect.size(); i++) painter.drawRect(graphsVect[i]);
 
-    for(int i=0; i<_qLinia.size(); i++) painter.drawLine(_qLinia[i]);
+}
+QVector<QRect> graphSpace::getQRectVect()
+{
+    return graphsVect;
+}
+QVector<QStaticText> graphSpace::getQName()
+{
+    return _qName;
 }

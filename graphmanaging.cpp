@@ -41,9 +41,13 @@ QString GraphManaging::getGraphHeight()
 void GraphManaging::clearGraphHeight()
 {
     _qTextHeightBox->setText("1");
-    _qTextNameBox->setText("Wykres");
+    _qTextNameBox->setText("Graph ");
 }
 QColor GraphManaging::getGraphColor()
 {
     return _qColorWindow->currentColor();
+}
+QString GraphManaging::getGraphName()
+{
+    return _qTextNameBox->text();
 }
