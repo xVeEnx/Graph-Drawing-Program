@@ -3,11 +3,11 @@
 #include <QPalette>
 #include <graphmanaging.h>
 
-scaleLayout::scaleLayout(QWidget *parent,QSize size)
+scaleLayout::scaleLayout(QWidget *parent,QSize size,QSize footerSize)
     : QWidget{parent},_iScale{1}
 {
     setFixedSize(size);
-     _iHeight=(size.height()-100)/10;
+     _iHeight=(size.height()-footerSize.height())/10;
     for(int i=10; i>=0; i--)
     {
         double iscl=_iScale*_iHeight*i;

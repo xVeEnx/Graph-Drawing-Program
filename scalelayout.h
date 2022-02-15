@@ -10,7 +10,7 @@ class scaleLayout : public QWidget
 {
     Q_OBJECT
 public:
-    explicit scaleLayout(QWidget *parent = nullptr,QSize size={100,600});
+    explicit scaleLayout(QWidget *parent,QSize size,QSize footerSize);
 protected:
     void paintEvent(QPaintEvent *event);
 

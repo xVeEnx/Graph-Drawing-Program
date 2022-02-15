@@ -18,7 +18,7 @@ GraphManaging::GraphManaging(QWidget *parent)
                    | QColorDialog::NoButtons
        );
     _qLabelLayout=new QFormLayout();
-    clearGraphHeight();
+    clearGraphHeight(1);
 
     _qLabelLayout->addRow(tr("Add Graph"),_qTextHeightBox);
     _qLabelLayout->addRow(tr("Set Name"),_qTextNameBox);
@@ -38,10 +38,10 @@ QString GraphManaging::getGraphHeight()
 {
     return _qTextHeightBox->text();
 }
-void GraphManaging::clearGraphHeight()
+void GraphManaging::clearGraphHeight(int i)
 {
     _qTextHeightBox->setText("1");
-    _qTextNameBox->setText("Graph ");
+    _qTextNameBox->setText(QString::number(i));
 }
 QColor GraphManaging::getGraphColor()
 {

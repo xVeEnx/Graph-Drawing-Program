@@ -1,7 +1,7 @@
 #include "graphspace.h"
 
 graphSpace::graphSpace(QWidget *parent,QSize size)
-    : QWidget{parent},_iWidth{80},_iSpace{5},_iScale{1}
+    : QWidget{parent},_iWidth{10},_iSpace{5},_iScale{1}
 {
     setFixedSize(size);
     double height=size.height()/10;
@@ -13,20 +13,21 @@ graphSpace::graphSpace(QWidget *parent,QSize size)
 }
 void graphSpace::addGraphs()
 {
-
-
     GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
     int graphHeight=(manager->getGraphHeight()).toInt();
 
     if(graphHeight<1) return;
+
     _qColor.push_back(manager->getGraphColor());
     _qName.push_back(QStaticText(manager->getGraphName()));
-    manager->clearGraphHeight();
+    manager->clearGraphHeight(_qName.size()+1);
 
     int numOfGraphs= graphsVect.size();
     int height=QWidget::height();
     graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-graphHeight));
+
     emit layoutSetting();
+
     update();
 }
 void graphSpace::paintEvent(QPaintEvent *event)

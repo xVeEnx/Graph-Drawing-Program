@@ -3,7 +3,7 @@
 GraphFooter::GraphFooter(QWidget *parent,QSize size)
     : QWidget{parent}
 {
-    setMinimumSize(size);
+    setFixedSize(size);
 
 }
 void GraphFooter::paintEvent(QPaintEvent *event)
@@ -11,9 +11,9 @@ void GraphFooter::paintEvent(QPaintEvent *event)
      QPainter painter(this);
             for(int i=0; i<_qName.size(); i++)
             {
-                _qName[i].setTextWidth(1);
-                qDebug()<<"bottomleft"<<_qRect[i].bottomLeft().x();
-                painter.drawStaticText(_qRect[i].bottomLeft().x()+12,0,_qName[i]);
+                _qName[i].setTextWidth(10);
+                qDebug()<<_qName[i].size()<<"width";
+                painter.drawStaticText(_qRect[i].bottomLeft().x(),0,_qName[i]);
             }
 }
 void GraphFooter::setRects()
@@ -21,4 +21,5 @@ void GraphFooter::setRects()
     QPointer<graphSpace> manager=qobject_cast<graphSpace*>(sender());
     _qRect=manager->getQRectVect();
     _qName=manager->getQName();
+    update();
 }

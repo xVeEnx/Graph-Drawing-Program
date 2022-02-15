@@ -10,13 +10,16 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
 {
     QSize scaleSize(50,600);
     QSize graphSize(1050,500);
-    QSize footerMinSize(1000,25);
-    if(graphSize.height()+100!=scaleSize.height())
+    QSize footerFixedSize(1000,100);
+    if(graphSize.height()+footerFixedSize.height()!=scaleSize.height()
+            &&footerFixedSize.height()>=100
+            &&graphSize.height()>=500)//footer size has to be >=100scalesizeheight=graphsize.height+footerminsize.height
     {
-        qDebug()<<"graphsize height has to be 100 larger than scaleSize";
-        exit(EXIT_FAILURE);//graphsize && scalesize must be the same or scale wont work good
+        qDebug()<<"scalesize height has to be graphsize.height+ footermin.height";
+      exit(EXIT_FAILURE);//graphsize && scalesize must be the same or scale wont work good
     }
-      setFrameStyle(Box|Plain);
+
+    setFrameStyle(Box|Plain);
       setLineWidth(3);
 
       _qLayout =new QHBoxLayout();
@@ -24,12 +27,9 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
       _qVerticalLayout=new QVBoxLayout();
 
       _qGraphWidget=new graphSpace(nullptr,graphSize);
-      _qScaleWidget=new scaleLayout(nullptr,scaleSize);
-      _qFooterWidget=new GraphFooter();
+      _qScaleWidget=new scaleLayout(nullptr,scaleSize,footerFixedSize);
+      _qFooterWidget=new GraphFooter(nullptr,footerFixedSize);
 
-
-     qDebug()<<_qScaleWidget->height()<<"scalewidget  size";
-     qDebug()<<_qGraphWidget->height()<<"graphwidget  size";
 
      _qHorizontalLayout->addWidget(_qScaleWidget);
      _qVerticalLayout->setSpacing(0);
@@ -43,8 +43,6 @@ graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
 
     //drawLabels();
     setLayout(_qLayout);
-    qDebug()<<_qScaleWidget->height()<<"at the end scalewidget  size";
-    qDebug()<<_qGraphWidget->height()<<"at the end graphwidget  size";
 }
 
 

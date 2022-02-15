@@ -22,7 +22,7 @@ public:
     QString getGraphHeight();
     QString getGraphName();
     QColor getGraphColor();
-    void clearGraphHeight();
+    void clearGraphHeight(int i);
 signals:
 //        void addGraph(int sizeOfGraph);
 private slots:
