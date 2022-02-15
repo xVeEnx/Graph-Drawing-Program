@@ -9,11 +9,13 @@ GraphFooter::GraphFooter(QWidget *parent,QSize size)
 void GraphFooter::paintEvent(QPaintEvent *event)
 {
      QPainter painter(this);
+     painter.setPen(Qt::gray);
             for(int i=0; i<_qName.size(); i++)
             {
                 _qName[i].setTextWidth(10);
+                //QPainter::setClipRect(QRect(0,0,10,100),Qt::NoClip); cos z tym sprawdzic
                 qDebug()<<_qName[i].size()<<"width";
-                painter.drawStaticText(_qRect[i].bottomLeft().x(),0,_qName[i]);
+                painter.drawStaticText(_qRect[i].bottomLeft().x(),10,_qName[i]);
             }
 }
 void GraphFooter::setRects()
