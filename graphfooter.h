@@ -23,7 +23,7 @@ signals:
 private:
     QVector<QStaticText> _qName;
     QVector<QRect> _qRect;
-
+    int _iSpaceBetweenRects;
 
 };
 

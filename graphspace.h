@@ -13,6 +13,7 @@ public:
     explicit graphSpace(QWidget *parent = nullptr,QSize size={1000,500});
     QVector<QRect> getQRectVect();
     QVector<QStaticText> getQName();
+    int getSpace();
 signals:
     void layoutSetting();
 protected:
@@ -22,11 +23,12 @@ public slots:
     void addGraphs();
 
 private:
+    void refreshGraphs();
     QVector<QRect> graphsVect;
     QVector<QLine> _qLine;
     QVector<QColor> _qColor;
     QVector<QStaticText> _qName;
-
+    void validateSize();
     int _iWidth;
     int _iScale;
 };
