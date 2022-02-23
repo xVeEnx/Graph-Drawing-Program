@@ -1,7 +1,7 @@
 #include "graphspace.h"
 
 graphSpace::graphSpace(QWidget *parent,QSize size)
-    : QWidget{parent},_iWidth{100},_iSpace{40},_iScale{1}
+    : QWidget{parent},_iWidth{300},_iSpace{40},_iScale{1}
 {
     setFixedSize(size);
     double height=size.height()/10;
@@ -65,12 +65,18 @@ void graphSpace::refreshGraphs(){
     int height=QWidget::height();
     for(int i=0;i<graphsVect.size();i++)
     {
+        int temp=-graphsVect[i].height();
         graphsVect[i].setBottomLeft(QPoint(_iSpace*i+_iWidth*i,height));
-        qDebug()<<graphsVect[i].width()<<"<---Vect nr. "<<i;
+        graphsVect[i].setWidth(_iWidth);
+        graphsVect[i].setHeight(temp);
+        _qLine.push_back(QLine(_iSpace*i+_iWidth*i,height-50,0,0));
+        qDebug()<<graphsVect[i].x()<<"<---Vect nr. "<<i;
+        qDebug()<<graphsVect[i].width()<<"<--- Vect width nr. "<<i;
         qDebug()<<graphsVect[i].height()<<"<--- Vect height nr. "<<i;
         qDebug()<<height<<"<---  height ";
         //,height,_iWidth,-graphHeight
     }
+    emit layoutSetting();
     update();
 }
 void graphSpace::validateSize(){
