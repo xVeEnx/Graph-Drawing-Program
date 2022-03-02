@@ -14,12 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    int width=QInputDialog::getInt(this,"Podaj szerokość:","Szerokość: (500-1600)",1050,500,1600);
+    int height=QInputDialog::getInt(this,"Podaj wysokość:","Wysokość: (200-850)",600,200,850);
+
     QWidget *widget=new QWidget;
-    //resize(1280, 620);
     _qLayoutLeft=new QHBoxLayout;
     _qLayoutRight=new QHBoxLayout;
     _qFinalLayout=new QHBoxLayout;
-    _qGraphWindow=new graphWindow(this);
+    _qGraphWindow=new graphWindow(this,QSize(width,height));
     _qGraphManager=new GraphManaging(this);
 
     _qLayoutLeft->addWidget(_qGraphWindow);
@@ -44,14 +46,17 @@ void MainWindow::createMenus()
     saveAction=new QAction("Save");
     openAction=new QAction("Open");
     exportAction=new QAction("Export");
+    sortAction=new QAction("Sort graphs");
 
     connect(saveAction,SIGNAL(triggered()),this,SLOT(save()));
     connect(openAction,SIGNAL(triggered()),this,SLOT(open()));
     connect(exportAction,SIGNAL(triggered()),this,SLOT(exportFunc()));
+    connect(sortAction,SIGNAL(triggered()),_qGraphWindow->getGraphSpace(),SLOT(sortFunc()));
 
     File->addAction(saveAction);
     File->addAction(openAction);
     File->addAction(exportAction);
+    File->addAction(sortAction);
 }
 void MainWindow::save()
 {

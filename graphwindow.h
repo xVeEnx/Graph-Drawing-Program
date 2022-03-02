@@ -16,7 +16,7 @@ class graphWindow : public QFrame
 {
     Q_OBJECT
 public:
-    graphWindow(QWidget *parent=nullptr);
+    graphWindow(QWidget *parent=nullptr,QSize graphWindowSize=QSize(1050,500));
     graphSpace* getGraphSpace();
     GraphFooter* getGraphFooter();
 

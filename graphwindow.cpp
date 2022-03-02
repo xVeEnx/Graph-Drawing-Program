@@ -6,11 +6,11 @@
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QSizePolicy>
-graphWindow::graphWindow(QWidget *parent) : QFrame(parent)
+graphWindow::graphWindow(QWidget *parent,QSize graphWindowSize) : QFrame(parent)
 {
-    QSize scaleSize(50,600);
-    QSize graphSize(1050,500);
-    QSize footerFixedSize(1000,100);
+    QSize scaleSize(50,graphWindowSize.height()+100);
+    QSize graphSize(graphWindowSize);
+    QSize footerFixedSize(graphWindowSize.width(),100);
     if(graphSize.height()+footerFixedSize.height()!=scaleSize.height()
             &&footerFixedSize.height()>=100
             &&graphSize.height()>=500)//footer size has to be >=100scalesizeheight=graphsize.height+footerminsize.height

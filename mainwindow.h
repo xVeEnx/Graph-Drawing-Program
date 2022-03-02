@@ -8,6 +8,7 @@
 #include <graphwindow.h>
 #include <graphmanaging.h>
 #include <graphspace.h>
+#include <QInputDialog>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -40,5 +41,7 @@ private:
     QAction *saveAction;
     QAction *openAction;
     QAction *exportAction;
+    QAction *sortAction;
+
 };
 #endif // MAINWINDOW_H

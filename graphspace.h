@@ -21,8 +21,10 @@ protected:
      int _iSpace;
 public slots:
     void addGraphs();
+    void sortFunc();
 
 private:
+    void sort(QVector<QRect>& vect,int left, int right);
     void refreshGraphs();
     QVector<QRect> graphsVect;
     QVector<QLine> _qLine;
