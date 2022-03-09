@@ -81,6 +81,13 @@ void graphSpace::swapRect(QVector<QRect>& qVec, int i,int j)
     qVec[i]=qVec[j];
     qVec[j]=qR;
 }
+void graphSpace::swapText(QVector<QStaticText>& qVec, int i,int j)
+{
+    if(i==j) return;
+    QStaticText qR=qVec[i];
+    qVec[i]=qVec[j];
+    qVec[j]=qR;
+}
 int graphSpace::Partition(QVector<QRect> &v, int start, int end){
 
     int pivot = end;
@@ -88,6 +95,7 @@ int graphSpace::Partition(QVector<QRect> &v, int start, int end){
     for(int i=start;i<end;++i){
         if(v[i].height()<v[pivot].height()){
             swapRect(v,i,j);
+            swapText(_qName,i,j);
             ++j;
         }
     }
@@ -101,7 +109,7 @@ void graphSpace::sort(QVector<QRect>& vect,int left, int right)
             sort(vect,left,p-1);
             sort(vect,p+1,right);
         }
-    emit graphSorted(graphsVect);
+    emit graphSorted();
 }
 void graphSpace::sortFunc()
 {

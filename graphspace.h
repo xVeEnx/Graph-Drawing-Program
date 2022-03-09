@@ -16,7 +16,7 @@ public:
     int getSpace();
 signals:
     void layoutSetting();
-    void graphSorted(QVector<QRect> graphVect);
+    void graphSorted();
 protected:
     void paintEvent(QPaintEvent *event);
      int _iSpace;
@@ -36,6 +36,8 @@ private:
     int _iScale;
     void swapRect(QVector<QRect>& qVec, int i,int j);
     int Partition(QVector<QRect> &v, int start, int end);
+    void swapText(QVector<QStaticText>& qVec, int i,int j);
+
 };
 
 #endif // GRAPHSPACE_H

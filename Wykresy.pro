@@ -13,6 +13,7 @@ SOURCES += \
     graphmanaging.cpp \
     graphspace.cpp \
     graphwindow.cpp \
+    grect.cpp \
     main.cpp \
     mainwindow.cpp \
     scalelayout.cpp
@@ -22,6 +23,7 @@ HEADERS += \
     graphmanaging.h \
     graphspace.h \
     graphwindow.h \
+    grect.h \
     mainwindow.h \
     scalelayout.h
 
