@@ -12,6 +12,7 @@
 #include <graphspace.h>
 #include <scalelayout.h>
 #include <graphfooter.h>
+#include <QSignalMapper>
 class graphWindow : public QFrame
 {
     Q_OBJECT
@@ -31,7 +32,7 @@ private:
     QGridLayout *_qMainLayout;
     QMenuBar *menuBar;
     QRect m_rectangle;
-
+    QSignalMapper* _qSignalMapper;
 
 };
 

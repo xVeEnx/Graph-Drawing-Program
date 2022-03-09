@@ -14,12 +14,14 @@ public slots:
     void setRects();
 public:
         explicit GraphFooter(QWidget *parent = nullptr,QSize size={1000,25});
+public slots:
+    void sortFooter();
 protected:
     void paintEvent(QPaintEvent *event);
 
 
 
-signals:
+
 private:
     QVector<QStaticText> _qName;
     QVector<QRect> _qRect;

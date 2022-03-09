@@ -1,5 +1,6 @@
 #include "graphspace.h"
 //#include <iostream>
+
 graphSpace::graphSpace(QWidget *parent,QSize size)
     : QWidget{parent},_iWidth{300},_iSpace{40},_iScale{1}
 {
@@ -47,6 +48,67 @@ void graphSpace::paintEvent(QPaintEvent *event)
     for(int i=0; i<graphsVect.size(); i++) painter.drawRect(graphsVect[i]);
 
 }
+
+void graphSpace::refreshGraphs(){
+    int height=QWidget::height();
+    for(int i=0; i<graphsVect.size(); i++)
+    {
+        int temp=graphsVect[i].height();
+        graphsVect[i].setBottomLeft(QPoint(_iSpace*i+_iWidth*i,height));
+        graphsVect[i].setWidth(_iWidth);
+        graphsVect[i].setHeight(temp);
+    }
+    emit layoutSetting();
+    update();
+}
+void graphSpace::validateSize(){
+    int i=0;
+    qDebug()<<"iSpace=> "<<_iSpace<<"iwidth"<<_iWidth<<"gr size"<<graphsVect.size();
+    if(_iSpace>5) _iSpace/=1.5;
+    qDebug()<<"iwidth*gr= "<<_iWidth*graphsVect.size()+_iWidth<<"\nSize width=> "<<size().width();
+    qDebug()<<"iwidth*size= "<<_iWidth*graphsVect.size()+_iSpace*graphsVect.size();
+
+    while((_iWidth*(graphsVect.size()+1)+_iSpace*(graphsVect.size()+1))>=size().width()) {
+        i++;
+        _iWidth=_iWidth/2;
+        refreshGraphs();
+    }
+}
+void graphSpace::swapRect(QVector<QRect>& qVec, int i,int j)
+{
+    if(i==j) return;
+    QRect qR=qVec[i];
+    qVec[i]=qVec[j];
+    qVec[j]=qR;
+}
+int graphSpace::Partition(QVector<QRect> &v, int start, int end){
+
+    int pivot = end;
+    int j = start;
+    for(int i=start;i<end;++i){
+        if(v[i].height()<v[pivot].height()){
+            swapRect(v,i,j);
+            ++j;
+        }
+    }
+    swapRect(v,j,pivot);
+    return j;
+}
+void graphSpace::sort(QVector<QRect>& vect,int left, int right)
+{
+    if(left<right){
+            int p = Partition(vect,left,right);
+            sort(vect,left,p-1);
+            sort(vect,p+1,right);
+        }
+    emit graphSorted(graphsVect);
+}
+void graphSpace::sortFunc()
+{
+    sort(graphsVect,0,graphsVect.size()-1);
+    update();
+}
+
 QVector<QRect> graphSpace::getQRectVect()
 {
     return graphsVect;
@@ -59,67 +121,4 @@ QVector<QStaticText> graphSpace::getQName()
 int graphSpace::getSpace()
 {
     return _iSpace;
-}
-void graphSpace::refreshGraphs(){
-    int numOfGraphs= graphsVect.size();
-    int height=QWidget::height();
-    for(int i=0; i<graphsVect.size(); i++)
-    {
-        int temp=graphsVect[i].height();
-        graphsVect[i].setBottomLeft(QPoint(_iSpace*i+_iWidth*i,height));
-        graphsVect[i].setWidth(_iWidth);
-        graphsVect[i].setHeight(temp);
-//        qDebug()<<graphsVect[i].x()<<"<---Vect nr. "<<i;
-//        qDebug()<<graphsVect[i].width()<<"<--- Vect width nr. "<<i;
-//        qDebug()<<graphsVect[i].height()<<"<--- Vect height nr. "<<i;
-//        qDebug()<<graphsVect[i].y()<<"<--- Vect y nr. "<<i;
-//        qDebug()<<height<<"<---  height ";
-    }
-    emit layoutSetting();
-    update();
-}
-void graphSpace::validateSize(){
-    int i=0;
-    if(_iSpace>5) _iSpace/=1.5;
-    while((_iWidth*graphsVect.size()+_iWidth)>size().width()) {
-        i++;
-        qDebug()<<"Imin"<<i;
-        _iWidth=_iWidth/2;
-        refreshGraphs();
-    }
-    qDebug()<<"Imout";
-}
-void swapRect(QVector<QRect>& qVec, int i,int j)
-{
-    if(i==j) return;
-    QRect qR=qVec[i];
-    qVec[i]=qVec[j];
-    qVec[j]=qR;
-}
-int Partition(QVector<QRect> &v, int start, int end){
-
-    int pivot = end;
-    int j = start;
-    for(int i=start;i<end;++i){
-        if(v[i].height()<v[pivot].height()){
-            swapRect(v,i,j);
-            ++j;
-        }
-    }
-    swapRect(v,j,pivot);
-    return j;
-
-}
-void graphSpace::sort(QVector<QRect>& vect,int left, int right)
-{
-    if(left<right){
-            int p = Partition(vect,left,right);
-            sort(vect,left,p-1);
-            sort(vect,p+1,right);
-        }
-}
-void graphSpace::sortFunc()
-{
-    sort(graphsVect,0,graphsVect.size()-1);
-    update();
 }

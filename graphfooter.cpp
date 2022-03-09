@@ -30,3 +30,6 @@ void GraphFooter::setRects()
     _iSpaceBetweenRects=manager->getSpace();
     update();
 }
+void GraphFooter::sortFooter()
+{
+}

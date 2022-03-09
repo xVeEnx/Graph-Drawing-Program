@@ -30,6 +30,8 @@ graphWindow::graphWindow(QWidget *parent,QSize graphWindowSize) : QFrame(parent)
       _qScaleWidget=new scaleLayout(nullptr,scaleSize,footerFixedSize);
       _qFooterWidget=new GraphFooter(nullptr,footerFixedSize);
 
+      QObject::connect(_qGraphWidget,SIGNAL(graphSorted(QVector<QRect>)),
+                      _qFooterWidget,SLOT(sortFooter()));
 
      _qHorizontalLayout->addWidget(_qScaleWidget);
      _qVerticalLayout->setSpacing(0);
