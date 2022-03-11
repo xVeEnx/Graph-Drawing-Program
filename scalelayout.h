@@ -13,7 +13,8 @@ public:
     explicit scaleLayout(QWidget *parent,QSize size,QSize footerSize);
 protected:
     void paintEvent(QPaintEvent *event);
-
+public slots:
+    void scaleChanging();
 private:
     int _iHeight;
     int _iScale;

@@ -24,6 +24,10 @@ void scaleLayout::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     for(int i=0; i<_qText.size(); i++) painter.drawStaticText(this->width()-25,_iHeight*i,_qText[i]);
    for(int i=0; i<_qLinia.size(); i++) painter.drawLine(_qLinia[i]);
+}
 
+void scaleLayout::scaleChanging()
+{
+    qDebug()<<"im in";
 }
 

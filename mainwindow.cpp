@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     widget->setLayout(_qFinalLayout);
     setCentralWidget(widget);
     createMenus();
-    QObject::connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
+    connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
                      _qGraphWindow->getGraphSpace(),SLOT(addGraphs()));
-    QObject::connect(_qGraphWindow->getGraphSpace(),SIGNAL(layoutSetting()),
+    connect(_qGraphWindow->getGraphSpace(),SIGNAL(layoutSetting()),
                     _qGraphWindow->getGraphFooter(),SLOT(setRects()));
 
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
@@ -50,10 +50,14 @@ void MainWindow::createMenus()
     exportAction=new QAction("Export");
     sortAction=new QAction("Sort graphs");
 
-    connect(saveAction,SIGNAL(triggered()),this,SLOT(save()));
-    connect(openAction,SIGNAL(triggered()),this,SLOT(open()));
-    connect(exportAction,SIGNAL(triggered()),this,SLOT(exportFunc()));
-    connect(sortAction,SIGNAL(triggered()),_qGraphWindow->getGraphSpace(),SLOT(sortFunc()));
+    connect(saveAction,SIGNAL(triggered()),
+            this,SLOT(save()));
+    connect(openAction,SIGNAL(triggered()),
+            this,SLOT(open()));
+    connect(exportAction,SIGNAL(triggered()),
+            this,SLOT(exportFunc()));
+    connect(sortAction,SIGNAL(triggered()),
+            _qGraphWindow->getGraphSpace(),SLOT(sortFunc()));
 
     File->addAction(saveAction);
     File->addAction(openAction);

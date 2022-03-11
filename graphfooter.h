@@ -7,6 +7,8 @@
 #include <QStaticText>
 #include <QPointer>
 #include <graphspace.h>
+#include <grect.h>
+
 class GraphFooter : public QWidget
 {
     Q_OBJECT
@@ -15,7 +17,6 @@ public slots:
 public:
         explicit GraphFooter(QWidget *parent = nullptr,QSize size={1000,25});
 public slots:
-    void sortFooter();
 protected:
     void paintEvent(QPaintEvent *event);
 
@@ -24,7 +25,7 @@ protected:
 
 private:
     QVector<QStaticText> _qName;
-    QVector<QRect> _qRect;
+    QVector<GRect> _gRect;
     int _iSpaceBetweenRects;
 
 };

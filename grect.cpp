@@ -1,8 +1,14 @@
 #include "grect.h"
 
-GRect::GRect()
+GRect::GRect(QRect qrect)
 {
-
+    _qRectangle=qrect;
+}
+GRect::GRect(QRect qrect,QColor col,QStaticText text)
+{
+    _qRectangle=qrect;
+    _qColor=col;
+    _qText=text;
 }
 QRect GRect::getQRectangle()
 {
@@ -15,4 +21,32 @@ QColor GRect::getQColor()
 QStaticText GRect::getQText()
 {
     return _qText;
+}
+void GRect::setBottomLeft(QPoint pt)
+{
+    _qRectangle.setBottomLeft(pt);
+}
+void GRect::setWidth(int w)
+{
+    _qRectangle.setWidth(w);
+}
+int GRect::height()
+{
+    return _qRectangle.height();
+}
+int GRect::width()
+{
+    return _qRectangle.width();
+}
+void GRect::setHeight(int h) noexcept
+{
+    _qRectangle.setHeight(h);
+}
+void GRect::setQColor(QColor col)
+{
+    _qColor=col;
+}
+void GRect::setQText(QStaticText text)
+{
+    _qText=text;
 }
