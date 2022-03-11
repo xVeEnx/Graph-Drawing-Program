@@ -15,6 +15,7 @@ public:
     QVector<GRect> getGRectVect();
     QVector<QStaticText> getQName();
     int getSpace();
+    double getScale();
 signals:
     void layoutSetting();
     void graphSorted();
@@ -39,7 +40,9 @@ private:
     void swapRect(QVector<GRect>& qVec, int i,int j);
     int Partition(QVector<GRect> &v, int start, int end);
     void swapText(QVector<QStaticText>& qVec, int i,int j);
-    int heightChanging(int height);
+    void heightChanging(int height);
+    void importFromXML();
+    void exportToXML();
 };
 
 #endif // GRAPHSPACE_H

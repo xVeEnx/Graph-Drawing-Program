@@ -23,10 +23,13 @@ public:
     void setQText(QStaticText text);
     int  height();
     int  width();
+    int getOriginalHeight();
+    void setOriginalHeight(int height);
 private:
     QRect _qRectangle;
     QColor _qColor;
     QStaticText _qText;
+    int  _iOriginalHeight;
 };
 
 #endif // GRECT_H

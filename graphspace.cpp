@@ -17,17 +17,20 @@ void graphSpace::addGraphs()
 {
     GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
     int graphHeight=(manager->getGraphHeight()).toInt();
-    graphHeight*=_iScale;
+    int orgHeight=graphHeight;
+
 
     if(graphHeight<1) return;
-    if(graphHeight>this->height()) graphHeight=heightChanging(graphHeight);
+    if(graphHeight*_iScale>this->height()) heightChanging(graphHeight);
     _qColor.push_back(manager->getGraphColor());
     int numOfGraphs= graphsVect.size();
     int height=QWidget::height();
 
-    graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-graphHeight));
+    graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-(graphHeight*_iScale)));
     graphsVect[graphsVect.size()-1].setQText(QStaticText(manager->getGraphName()));
     graphsVect[graphsVect.size()-1].setQColor(manager->getGraphColor());
+    graphsVect[graphsVect.size()-1].setOriginalHeight(orgHeight);
+
     manager->clearGraphHeight(graphsVect.size()+1);
     emit layoutSetting();
 
@@ -113,6 +116,10 @@ QVector<GRect> graphSpace::getGRectVect()
 {
     return graphsVect;
 }
+double graphSpace::getScale()
+{
+    return _iScale;
+}
 
 QVector<QStaticText> graphSpace::getQName()
 {
@@ -122,16 +129,33 @@ int graphSpace::getSpace()
 {
     return _iSpace;
 }
-int graphSpace::heightChanging(int height)
+void graphSpace::heightChanging(int height)
 {
     int screenHeight=this->height();
     int tempHeight=height;
+    qDebug()<<"_iScale= :"<<_iScale;
     while(height>screenHeight) {
+        qDebug()<<"height w petli: "<<height;
         height=tempHeight;
-     qDebug()<<"height"<<height<<"this->height"<<this->height();
-        _iScale/=1.1;
+        qDebug()<<"height w petli2: "<<height;
+
+        _iScale/=2;
         height*=_iScale;
     }
-    emit changeScale();
-    return height;
+    qDebug()<<"_iScale po petli= :"<<_iScale;
+    for(int i=0;i<graphsVect.size();i++)
+    {
+        graphsVect[i].setHeight(-(graphsVect[i].getOriginalHeight()*_iScale));
+        qDebug()<<"org height * iscale= "<<graphsVect[i].getOriginalHeight()*_iScale<<"dla i= "<<i;
     }
+        qDebug()<<" height="<<height;
+    emit changeScale();
+}
+void graphSpace::importFromXML()
+{
+    //if()
+}
+void graphSpace::exportToXML()
+{
+
+}

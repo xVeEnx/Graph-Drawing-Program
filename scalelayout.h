@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QStaticText>
 #include <QSize>
-
+#include <graphspace.h>
 class scaleLayout : public QWidget
 {
     Q_OBJECT
@@ -17,11 +17,12 @@ public slots:
     void scaleChanging();
 private:
     int _iHeight;
-    int _iScale;
+    double _iScale;
     QVector<QLine>_qLinia;
     QVector<QStaticText> _qText;
     scaleLayout* _qScaleLayout;
     scaleLayout* _qScaleWidget;
+    void setScale();
 };
 
 #endif // SCALELAYOUT_H

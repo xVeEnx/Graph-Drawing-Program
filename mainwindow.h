@@ -28,7 +28,6 @@ private slots:
 
 
 private:
-
     void createMenus();
     GraphManaging* _qGraphManager;
     QString graphs;

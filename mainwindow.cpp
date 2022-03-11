@@ -8,7 +8,7 @@
 #include <QLayout>
 #include <QMessageBox>
 #include <QPushButton>
-
+#include <QtXml/QDomDocument>
 //#include <graphwindow.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(widget);
     createMenus();
     connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
-                     _qGraphWindow->getGraphSpace(),SLOT(addGraphs()));
+            _qGraphWindow->getGraphSpace(),SLOT(addGraphs()));
     connect(_qGraphWindow->getGraphSpace(),SIGNAL(layoutSetting()),
-                    _qGraphWindow->getGraphFooter(),SLOT(setRects()));
+            _qGraphWindow->getGraphFooter(),SLOT(setRects()));
 
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
@@ -86,7 +86,7 @@ void MainWindow::save()
 }
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("XML Files (*.xml)"));
     if(fileName!="")
     {
         QFile file(fileName);
@@ -100,8 +100,12 @@ void MainWindow::open()
         else{
             QTextStream stream(&file);
             graphs=stream.readAll();
+           // QDomDocument graphsXML;
+           // graphsXML.setContent(&file);
             file.close();
+            qDebug()<<graphs;
         }
+
     }
 }
 void MainWindow::exportFunc()
@@ -115,4 +119,5 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 

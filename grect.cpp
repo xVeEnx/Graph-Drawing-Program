@@ -50,3 +50,11 @@ void GRect::setQText(QStaticText text)
 {
     _qText=text;
 }
+int GRect::getOriginalHeight()
+{
+    return _iOriginalHeight;
+}
+void GRect::setOriginalHeight(int height)
+{
+    _iOriginalHeight=height;
+}
