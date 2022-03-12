@@ -24,10 +24,10 @@ public:
 private slots:
     void open();
     void save();
-    void exportFunc();
-
 
 private:
+    void importFromXml(QFile& file);
+     void exportToXml(QFile& file);
     void createMenus();
     GraphManaging* _qGraphManager;
     QString graphs;
@@ -39,7 +39,6 @@ private:
     graphWindow* _qGraphWindow;
     QAction *saveAction;
     QAction *openAction;
-    QAction *exportAction;
     QAction *sortAction;
 
 };

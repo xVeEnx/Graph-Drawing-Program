@@ -6,7 +6,11 @@
 #include <QStaticText>
 #include <scalelayout.h>
 #include <grect.h>
-
+#include <QFile>
+#include <iostream>
+#include <sstream>
+#include<string>
+#include <QtXml>
 class graphSpace : public QWidget
 {
     Q_OBJECT
@@ -16,6 +20,8 @@ public:
     QVector<QStaticText> getQName();
     int getSpace();
     double getScale();
+    void importFromXML(QFile& file);
+    QString exportToXML();
 signals:
     void layoutSetting();
     void graphSorted();
@@ -28,12 +34,14 @@ public slots:
     void sortFunc();
 
 private:
+    void addingProcedure(int graphHeight,QColor color,QStaticText label);
+    QString listElements(QDomElement root,QString tagname,QString attribute);
     void sort(QVector<GRect>& vect,int left, int right);
     void refreshGraphs();
     QVector<GRect> graphsVect;
     QVector<QLine> _qLine;
-    QVector<QColor> _qColor;
-    QVector<QStaticText> _qName;
+   // QVector<QColor> _qColor;
+  //  QStaticText _qName;
     void widthChanging();
     int _iWidth;
     double _iScale;
@@ -41,8 +49,7 @@ private:
     int Partition(QVector<GRect> &v, int start, int end);
     void swapText(QVector<QStaticText>& qVec, int i,int j);
     void heightChanging(int height);
-    void importFromXML();
-    void exportToXML();
+
 };
 
 #endif // GRAPHSPACE_H

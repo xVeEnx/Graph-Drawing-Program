@@ -59,3 +59,11 @@ GraphFooter *graphWindow::getGraphFooter()
 {
     return _qFooterWidget;
 }
+QString graphWindow::exportToXML()
+{
+        return _qGraphWidget->exportToXML();
+}
+void graphWindow::importFromXML(QFile& file)
+{
+    _qGraphWidget->importFromXML(file);
+}

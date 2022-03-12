@@ -8,7 +8,7 @@
 #include <QLayout>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QtXml/QDomDocument>
+
 //#include <graphwindow.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     _qLayoutRight->addWidget(_qGraphManager);
     _qFinalLayout->addLayout(_qLayoutLeft);
     _qFinalLayout->addLayout(_qLayoutRight);
-
     widget->setLayout(_qFinalLayout);
     setCentralWidget(widget);
     createMenus();
@@ -47,26 +46,22 @@ void MainWindow::createMenus()
     File=menuBar()->addMenu("File");
     saveAction=new QAction("Save");
     openAction=new QAction("Open");
-    exportAction=new QAction("Export");
     sortAction=new QAction("Sort graphs");
 
     connect(saveAction,SIGNAL(triggered()),
             this,SLOT(save()));
     connect(openAction,SIGNAL(triggered()),
             this,SLOT(open()));
-    connect(exportAction,SIGNAL(triggered()),
-            this,SLOT(exportFunc()));
     connect(sortAction,SIGNAL(triggered()),
             _qGraphWindow->getGraphSpace(),SLOT(sortFunc()));
 
     File->addAction(saveAction);
     File->addAction(openAction);
-    File->addAction(exportAction);
     File->addAction(sortAction);
 }
 void MainWindow::save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Open File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("XML Files (*.xml)"));
     if(fileName!="")
     {
         QFile file(fileName);
@@ -77,9 +72,7 @@ void MainWindow::save()
             messageBox.setFixedSize(500,200);
         }
         else{
-            QTextStream stream(&file);
-            stream<<this->graphs;
-            stream.flush();
+            exportToXml(file);
             file.close();
         }
     }
@@ -98,26 +91,25 @@ void MainWindow::open()
             messageBox.setFixedSize(500,200);
         }
         else{
-            QTextStream stream(&file);
-            graphs=stream.readAll();
-           // QDomDocument graphsXML;
-           // graphsXML.setContent(&file);
+             importFromXml(file);
             file.close();
-            qDebug()<<graphs;
         }
 
     }
-}
-void MainWindow::exportFunc()
-{
-    QMessageBox messageBox;
-    messageBox.critical(0,"Error","Not defined yet !");
-    messageBox.setFixedSize(500,200);
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
 }
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+void MainWindow::exportToXml(QFile& file)
+{
+    QTextStream stream(&file);
+    qDebug()<<_qGraphWindow->exportToXML()<<" tresc";
+    stream<<_qGraphWindow->exportToXML();
+    stream.flush();
+}
+void MainWindow::importFromXml(QFile& file)
+{
+    _qGraphWindow->importFromXML(file);
+}
 

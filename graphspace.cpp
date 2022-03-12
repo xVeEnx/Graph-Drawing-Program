@@ -1,4 +1,8 @@
-#include "graphspace.h"
+﻿#include "graphspace.h"
+#include <QXmlStreamReader>
+#include <QMessageBox>
+#include <QtXml>
+#include <iostream>
 //#include <iostream>
 
 graphSpace::graphSpace(QWidget *parent,QSize size)
@@ -13,28 +17,33 @@ graphSpace::graphSpace(QWidget *parent,QSize size)
     }
 
 }
-void graphSpace::addGraphs()
+void graphSpace::addingProcedure(int graphHeight,QColor color,QStaticText label)
 {
-    GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
-    int graphHeight=(manager->getGraphHeight()).toInt();
     int orgHeight=graphHeight;
-
-
     if(graphHeight<1) return;
     if(graphHeight*_iScale>this->height()) heightChanging(graphHeight);
-    _qColor.push_back(manager->getGraphColor());
     int numOfGraphs= graphsVect.size();
     int height=QWidget::height();
 
     graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-(graphHeight*_iScale)));
-    graphsVect[graphsVect.size()-1].setQText(QStaticText(manager->getGraphName()));
-    graphsVect[graphsVect.size()-1].setQColor(manager->getGraphColor());
+    graphsVect[graphsVect.size()-1].setQText(label);
+    graphsVect[graphsVect.size()-1].setQColor(color);
     graphsVect[graphsVect.size()-1].setOriginalHeight(orgHeight);
 
-    manager->clearGraphHeight(graphsVect.size()+1);
     emit layoutSetting();
-
     update();
+}
+void graphSpace::addGraphs()
+{
+    GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
+    int graphHeight=(manager->getGraphHeight()).toInt();
+    QColor color=manager->getGraphColor();
+    QStaticText label=QStaticText(manager->getGraphName());
+
+    addingProcedure(graphHeight,color,label);
+    manager->clearGraphHeight(graphsVect.size()+1);
+
+
 }
 void graphSpace::paintEvent(QPaintEvent *event)
 {
@@ -123,7 +132,8 @@ double graphSpace::getScale()
 
 QVector<QStaticText> graphSpace::getQName()
 {
-    return _qName;
+    //return _qName;
+    return QVector<QStaticText>();
 }
 int graphSpace::getSpace()
 {
@@ -151,11 +161,58 @@ void graphSpace::heightChanging(int height)
         qDebug()<<" height="<<height;
     emit changeScale();
 }
-void graphSpace::importFromXML()
-{
-    //if()
-}
-void graphSpace::exportToXML()
-{
 
+QString graphSpace::exportToXML()
+{
+    QDomDocument document;
+    for(int i=0;i<graphsVect.size();i++)
+          {
+        QDomElement root= document.createElement("graph");
+        QDomElement label=document.createElement("label");
+        QDomElement height=document.createElement("height");
+        QDomElement color=document.createElement("color");
+        label.setAttribute("label",graphsVect[i].getQText().text());
+        height.setAttribute("height",-graphsVect[i].height());
+        color.setAttribute("color",graphsVect[i].getQColor().name());
+        document.appendChild(root);
+        root.appendChild(label);
+        root.appendChild(height);
+        root.appendChild(color);
+          }
+   return document.toString();
+}
+void graphSpace::importFromXML(QFile& file)
+{
+        QDomDocument document;
+        document.setContent(file.readLine());
+        qDebug()<<document.toString();
+
+         QDomElement root=document.firstChildElement();
+
+        QStaticText label=QStaticText(listElements(root,"label","label"));
+        if(label.text()=="ERROR")return;
+
+        if(listElements(root,"height","height")=="ERROR")return;
+        int height=listElements(root,"height","height").toInt();
+
+
+         if(listElements(root,"color","color")=="ERROR")return;
+        QColor color;
+        color.setNamedColor(listElements(root,"color","color"));
+
+        addingProcedure(height,color,label);
+
+
+}
+
+QString graphSpace::listElements(QDomElement root,QString tagname,QString attribute)
+{
+    QDomNodeList items=root.elementsByTagName(tagname);
+    QDomNode itemNode=items.at(0);
+    if(itemNode.isElement())
+    {
+        QDomElement itemEle=itemNode.toElement();
+       return itemEle.attribute(attribute);
+    }
+    else return QString("ERROR");
 }

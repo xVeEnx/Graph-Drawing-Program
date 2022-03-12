@@ -13,26 +13,28 @@
 #include <scalelayout.h>
 #include <graphfooter.h>
 #include <QSignalMapper>
+#include <QTextStream>
 class graphWindow : public QFrame
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    graphWindow(QWidget *parent=nullptr,QSize graphWindowSize=QSize(1050,500));
-    graphSpace* getGraphSpace();
-    GraphFooter* getGraphFooter();
-
+graphWindow(QWidget *parent=nullptr,QSize graphWindowSize=QSize(1050,500));
+graphSpace* getGraphSpace();
+GraphFooter* getGraphFooter();
+QString exportToXML();
+void importFromXML(QFile& file);
 private:
-    void drawLabels();
-    scaleLayout* _qScaleWidget;
-    QHBoxLayout* _qLayout;
-    QHBoxLayout* _qHorizontalLayout;
-    QVBoxLayout* _qVerticalLayout;
-    graphSpace *_qGraphWidget;
-    GraphFooter* _qFooterWidget;
-    QGridLayout *_qMainLayout;
-    QMenuBar *menuBar;
-    QRect m_rectangle;
-    QSignalMapper* _qSignalMapper;
+void drawLabels();
+scaleLayout* _qScaleWidget;
+QHBoxLayout* _qLayout;
+QHBoxLayout* _qHorizontalLayout;
+QVBoxLayout* _qVerticalLayout;
+graphSpace *_qGraphWidget;
+GraphFooter* _qFooterWidget;
+QGridLayout *_qMainLayout;
+QMenuBar *menuBar;
+QRect m_rectangle;
+QSignalMapper* _qSignalMapper;
 
 };
 
