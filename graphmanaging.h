@@ -29,13 +29,12 @@ private slots:
 
 
 private:
-     QColor* _qGraphColor;
-     QPushButton*  _qButtons;
-     QFormLayout* _qLabelLayout;
-     QLineEdit* _qTextHeightBox;
-     QLineEdit* _qTextNameBox;
-     QColorDialog * _qColorWindow;
-     QFormLayout* _qFormLayout;
+     std::unique_ptr<QPushButton>  _qButtons;
+     std::unique_ptr<QFormLayout> _qLabelLayout;
+     std::unique_ptr<QLineEdit> _qTextHeightBox;
+     std::unique_ptr<QLineEdit> _qTextNameBox;
+     std::unique_ptr<QColorDialog> _qColorWindow;
+     std::unique_ptr<QFormLayout> _qFormLayout;
 
 };
 

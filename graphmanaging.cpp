@@ -5,34 +5,33 @@ GraphManaging::GraphManaging(QWidget *parent)
     : QWidget(parent)
 {
 
-    _qButtons=new QPushButton;
+    _qButtons=std::unique_ptr<QPushButton>(new QPushButton());
     _qButtons->setText(tr("Add"));
     _qButtons->setMaximumSize(500,40);
 
-    _qTextHeightBox=new QLineEdit();
-    _qTextNameBox=new QLineEdit();
+    _qTextHeightBox=std::unique_ptr<QLineEdit>(new QLineEdit);
+    _qTextNameBox=std::unique_ptr<QLineEdit>(new QLineEdit);
     _qTextHeightBox->setValidator( new QIntValidator(1,999999999, this));
-    _qColorWindow=new QColorDialog();
+    _qColorWindow=std::unique_ptr<QColorDialog>(new QColorDialog());
     _qColorWindow->setOptions(
                    QColorDialog::DontUseNativeDialog
                    | QColorDialog::NoButtons
        );
-    _qLabelLayout=new QFormLayout();
+    _qLabelLayout=std::unique_ptr<QFormLayout>(new QFormLayout);
     clearGraphHeight(1);
 
-    _qLabelLayout->addRow(tr("Add Graph"),_qTextHeightBox);
-    _qLabelLayout->addRow(tr("Set Name"),_qTextNameBox);
-    _qLabelLayout->addRow(tr("Set Color"),_qColorWindow);
+    _qLabelLayout->addRow(tr("Add Graph"),_qTextHeightBox.get());
+    _qLabelLayout->addRow(tr("Set Name"),_qTextNameBox.get());
+    _qLabelLayout->addRow(tr("Set Color"),_qColorWindow.get());
 
-    qDebug()<<_qColorWindow;
-    _qLabelLayout->addWidget(_qButtons);
-    setLayout(_qLabelLayout);
+    _qLabelLayout->addWidget(_qButtons.get());
+    setLayout(_qLabelLayout.get());
     setFixedSize(550,620);
 
 }
 QPushButton* GraphManaging::getPushButton()
 {
-    return _qButtons;
+    return _qButtons.get();
 }
 QString GraphManaging::getGraphHeight()
 {

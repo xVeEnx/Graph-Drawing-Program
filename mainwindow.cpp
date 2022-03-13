@@ -91,7 +91,7 @@ void MainWindow::open()
             messageBox.setFixedSize(500,200);
         }
         else{
-             importFromXml(file);
+            _qGraphWindow->importFromXML(file);
             file.close();
         }
 
@@ -104,12 +104,8 @@ MainWindow::~MainWindow()
 void MainWindow::exportToXml(QFile& file)
 {
     QTextStream stream(&file);
-    qDebug()<<_qGraphWindow->exportToXML()<<" tresc";
     stream<<_qGraphWindow->exportToXML();
     stream.flush();
 }
-void MainWindow::importFromXml(QFile& file)
-{
-    _qGraphWindow->importFromXML(file);
-}
+
 

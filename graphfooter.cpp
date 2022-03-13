@@ -31,6 +31,5 @@ void GraphFooter::setRects()
     else for(int i=0;i<_gRect.size();i++)_qName[i]=_gRect[i].getQText();
 
     _iSpaceBetweenRects=manager->getSpace();
-    qDebug()<<"rozmiar"<<_qName.size();
     update();
 }

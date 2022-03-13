@@ -26,7 +26,6 @@ private slots:
     void save();
 
 private:
-    void importFromXml(QFile& file);
      void exportToXml(QFile& file);
     void createMenus();
     GraphManaging* _qGraphManager;

@@ -49,7 +49,7 @@ void graphSpace::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setPen(Qt::gray);
-    if(graphsVect.size()!=0)if(graphsVect[graphsVect.size()-1].getQRectangle().x()+_iWidth>this->width()) widthChanging();
+    if(graphsVect.size()!=0) if(graphsVect[graphsVect.size()-1].getQRectangle().x()+_iWidth>this->width()) widthChanging();
     //if last rect is not fitting on screen turn widthChanging which make space between graphs and graph width smaller
     for(int i=0; i<_qLine.size(); i++) painter.drawLine(_qLine[i]);
 
@@ -76,7 +76,7 @@ void graphSpace::widthChanging()
 {
     int i=0;
 
-    if(_iSpace>5) _iSpace/=1.5;//if graphs dont fit on screen make smaller spaces between them if it`s not enough change width
+    if(_iSpace>5) _iSpace/=1.5; //if graphs dont fit on screen make smaller spaces between them if it`s not enough change width
     while((_iWidth*(graphsVect.size()+1)+_iSpace*(graphsVect.size()+1))>=size().width())
     {
         i++;
@@ -97,8 +97,8 @@ int graphSpace::Partition(QVector<GRect> &v, int start, int end)
 {
     int pivot = end;
     int j = start;
-    for(int i=start;i<end;++i){
-        if(v[i].height()<v[pivot].height()){
+    for(int i=start; i<end; ++i) {
+        if(v[i].height()<v[pivot].height()) {
             swapRect(v,i,j);
             ++j;
         }
@@ -108,11 +108,11 @@ int graphSpace::Partition(QVector<GRect> &v, int start, int end)
 }
 void graphSpace::sort(QVector<GRect>& vect,int left, int right)
 {
-    if(left<right){
-            int p = Partition(vect,left,right);
-            sort(vect,left,p-1);
-            sort(vect,p+1,right);
-        }
+    if(left<right) {
+        int p = Partition(vect,left,right);
+        sort(vect,left,p-1);
+        sort(vect,p+1,right);
+    }
 }
 void graphSpace::sortFunc()
 {
@@ -143,65 +143,67 @@ void graphSpace::heightChanging(int height)
 {
     int screenHeight=this->height();
     int tempHeight=height;
-    qDebug()<<"_iScale= :"<<_iScale;
     while(height>screenHeight) {
-        qDebug()<<"height w petli: "<<height;
         height=tempHeight;
-        qDebug()<<"height w petli2: "<<height;
 
         _iScale/=2;
         height*=_iScale;
     }
-    qDebug()<<"_iScale po petli= :"<<_iScale;
-    for(int i=0;i<graphsVect.size();i++)
+
+    for(int i=0; i<graphsVect.size(); i++)
     {
         graphsVect[i].setHeight(-(graphsVect[i].getOriginalHeight()*_iScale));
-        qDebug()<<"org height * iscale= "<<graphsVect[i].getOriginalHeight()*_iScale<<"dla i= "<<i;
     }
-        qDebug()<<" height="<<height;
+
     emit changeScale();
 }
 
 QString graphSpace::exportToXML()
 {
     QDomDocument document;
-    for(int i=0;i<graphsVect.size();i++)
-          {
+    for(int i=0; i<graphsVect.size(); i++)
+    {
         QDomElement root= document.createElement("graph");
         QDomElement label=document.createElement("label");
         QDomElement height=document.createElement("height");
         QDomElement color=document.createElement("color");
         label.setAttribute("label",graphsVect[i].getQText().text());
-        height.setAttribute("height",-graphsVect[i].height());
+        height.setAttribute("height",graphsVect[i].getOriginalHeight());
         color.setAttribute("color",graphsVect[i].getQColor().name());
         document.appendChild(root);
         root.appendChild(label);
         root.appendChild(height);
         root.appendChild(color);
-          }
-   return document.toString();
+    }
+    return document.toString();
 }
 void graphSpace::importFromXML(QFile& file)
 {
-        QDomDocument document;
-        document.setContent(file.readLine());
-        qDebug()<<document.toString();
+    graphsVect.clear();
+    QDomDocument document;
+    std::string s=file.readAll().toStdString();
 
-         QDomElement root=document.firstChildElement();
+    while(s.size()>10)
+    {
+        document.setContent(QString::fromStdString(s));
+        int pos= s.find("/graph>\n")+8;
+         s= s.substr(pos);
+
+        QDomElement root=document.firstChildElement();
 
         QStaticText label=QStaticText(listElements(root,"label","label"));
-        if(label.text()=="ERROR")return;
+        if(label.text()=="ERROR") return;
 
-        if(listElements(root,"height","height")=="ERROR")return;
+        if(listElements(root,"height","height")=="ERROR") return;
         int height=listElements(root,"height","height").toInt();
 
 
-         if(listElements(root,"color","color")=="ERROR")return;
+        if(listElements(root,"color","color")=="ERROR") return;
         QColor color;
         color.setNamedColor(listElements(root,"color","color"));
 
         addingProcedure(height,color,label);
-
+    }
 
 }
 
@@ -212,7 +214,7 @@ QString graphSpace::listElements(QDomElement root,QString tagname,QString attrib
     if(itemNode.isElement())
     {
         QDomElement itemEle=itemNode.toElement();
-       return itemEle.attribute(attribute);
+        return itemEle.attribute(attribute);
     }
     else return QString("ERROR");
 }
