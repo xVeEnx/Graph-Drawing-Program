@@ -12,23 +12,23 @@
 //#include <graphwindow.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    ,_qUi(new Ui::MainWindow)
 {
     int width=QInputDialog::getInt(this,"Podaj szerokość:","Szerokość: (500-1600)",1050,500,1600);
     int height=QInputDialog::getInt(this,"Podaj wysokość:","Wysokość: (200-850)",600,200,850);
 
     QWidget *widget=new QWidget;
-    _qLayoutLeft=new QHBoxLayout;
-    _qLayoutRight=new QHBoxLayout;
-    _qFinalLayout=new QHBoxLayout;
-    _qGraphWindow=new graphWindow(this,QSize(width,height));
-    _qGraphManager=new GraphManaging(this);
+    _qLayoutLeft=std::unique_ptr<QHBoxLayout>(new QHBoxLayout);
+    _qLayoutRight=std::unique_ptr<QHBoxLayout>(new QHBoxLayout);
+    _qFinalLayout=std::unique_ptr<QHBoxLayout>(new QHBoxLayout);
+    _qGraphWindow=std::unique_ptr<graphWindow>(new graphWindow(this,QSize(width,height)));
+    _qGraphManager=std::unique_ptr<GraphManaging>(new GraphManaging(this));
 
-    _qLayoutLeft->addWidget(_qGraphWindow);
-    _qLayoutRight->addWidget(_qGraphManager);
-    _qFinalLayout->addLayout(_qLayoutLeft);
-    _qFinalLayout->addLayout(_qLayoutRight);
-    widget->setLayout(_qFinalLayout);
+    _qLayoutLeft->addWidget(_qGraphWindow.get());
+    _qLayoutRight->addWidget(_qGraphManager.get());
+    _qFinalLayout->addLayout(_qLayoutLeft.get());
+    _qFinalLayout->addLayout(_qLayoutRight.get());
+    widget->setLayout(_qFinalLayout.get());
     setCentralWidget(widget);
     createMenus();
     connect(_qGraphManager->getPushButton(),SIGNAL(pressed()),
@@ -41,23 +41,22 @@ MainWindow::MainWindow(QWidget *parent)
 }
 void MainWindow::createMenus()
 {
-    this->graphs="For now empty";
-    // ui->setupUi(this);
-    File=menuBar()->addMenu("File");
-    saveAction=new QAction("Save");
-    openAction=new QAction("Open");
-    sortAction=new QAction("Sort graphs");
+    this->_qGraphs="For now empty";
+    _qFile=std::unique_ptr<QMenu>(menuBar()->addMenu("File"));
+    _qSaveAction=std::unique_ptr<QAction>(new QAction("Save"));
+    _qOpenAction=std::unique_ptr<QAction>(new QAction("Open"));
+    _qSortAction=std::unique_ptr<QAction>(new QAction("Sort graphs"));
 
-    connect(saveAction,SIGNAL(triggered()),
+    connect(_qSaveAction.get(),SIGNAL(triggered()),
             this,SLOT(save()));
-    connect(openAction,SIGNAL(triggered()),
+    connect(_qOpenAction.get(),SIGNAL(triggered()),
             this,SLOT(open()));
-    connect(sortAction,SIGNAL(triggered()),
+    connect(_qSortAction.get(),SIGNAL(triggered()),
             _qGraphWindow->getGraphSpace(),SLOT(sortFunc()));
 
-    File->addAction(saveAction);
-    File->addAction(openAction);
-    File->addAction(sortAction);
+    _qFile->addAction(_qSaveAction.get());
+    _qFile->addAction(_qOpenAction.get());
+    _qFile->addAction(_qSortAction.get());
 }
 void MainWindow::save()
 {
@@ -99,7 +98,7 @@ void MainWindow::open()
 }
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete _qUi;
 }
 void MainWindow::exportToXml(QFile& file)
 {

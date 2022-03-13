@@ -45,12 +45,12 @@ void addingProcedure(int graphHeight,QColor color,QStaticText label);
 void sort(QVector<GRect>& vect,int left, int right);
 void refreshGraphs();
 void swapRect(QVector<GRect>& qVec, int i,int j);
-void heightChanging(int height);
+void heightChanging(int graphHeight);
 void widthChanging();
 
-QVector<GRect> graphsVect;
+QVector<GRect> _qGraph;
 QVector<QLine> _qLine;
-int _iWidth;
+int _iGraphWidth;
 double _iScale;
 
 

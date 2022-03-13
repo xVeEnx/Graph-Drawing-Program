@@ -26,18 +26,17 @@ void scaleLayout::paintEvent(QPaintEvent *event)
 void scaleLayout::setScale()
 {
     int k=0;
-    for(int i=10; i>=0; i--)
+    for(int i=10; i>=0; i--,k++)
     {
         int iscl=_iHeight/_iScale*k;
         QString str=QString::number(iscl);
         _qText[i].setText(str);
-        k++;
     }
     update();
 }
 void scaleLayout::scaleChanging()
 {
-    graphSpace* manager = qobject_cast<graphSpace*>(sender());
+    auto manager = qobject_cast<graphSpace*>(sender());
     _iScale=(manager->getScale());
     setScale();
 }

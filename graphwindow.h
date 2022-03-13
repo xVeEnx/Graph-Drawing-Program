@@ -23,14 +23,14 @@ graphSpace* getGraphSpace();
 GraphFooter* getGraphFooter();
 QString exportToXML();
 void importFromXML(QFile& file);
+
 private:
-void drawLabels();
-scaleLayout* _qScaleWidget;
-QHBoxLayout* _qLayout;
-QHBoxLayout* _qHorizontalLayout;
-QVBoxLayout* _qVerticalLayout;
-graphSpace *_qGraphWidget;
-GraphFooter* _qFooterWidget;
+std::unique_ptr<scaleLayout> _qScaleWidget;
+std::unique_ptr<QHBoxLayout> _qLayout;
+std::unique_ptr<QHBoxLayout> _qHorizontalLayout;
+std::unique_ptr<QVBoxLayout> _qVerticalLayout;
+std::unique_ptr<graphSpace>_qGraphWidget;
+std::unique_ptr<GraphFooter> _qFooterWidget;
 QGridLayout *_qMainLayout;
 QMenuBar *menuBar;
 QRect m_rectangle;

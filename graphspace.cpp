@@ -6,14 +6,14 @@
 //#include <iostream>
 
 graphSpace::graphSpace(QWidget *parent,QSize size)
-    : QWidget{parent},_iWidth{300},_iSpace{40},_iScale{1}
+    : QWidget{parent},_iGraphWidth{300},_iSpace{40},_iScale{1}
 {
     setFixedSize(size);
     double height=size.height()/10;
 
     for(int i=10; i>=0; i--)
     {
-        _qLine.push_back(QLine(0,height*i,size.width(),height*i));
+        _qLine.push_back(QLine(0,height*i,size.width(),height*i)); //draw "scale" lines
     }
 
 }
@@ -21,14 +21,24 @@ void graphSpace::addingProcedure(int graphHeight,QColor color,QStaticText label)
 {
     int orgHeight=graphHeight;
     if(graphHeight<1) return;
+    if(_qGraph.size()>1000) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","Osiągnięto maksymalną liczbe wykresów!");
+        messageBox.setFixedSize(500,200);
+    }
     if(graphHeight*_iScale>this->height()) heightChanging(graphHeight);
-    int numOfGraphs= graphsVect.size();
-    int height=QWidget::height();
+    int numOfGraphs= _qGraph.size();
+    int screenHeight=QWidget::height();
 
-    graphsVect.push_back(QRect(_iSpace*numOfGraphs+_iWidth*numOfGraphs,height,_iWidth,-(graphHeight*_iScale)));
-    graphsVect[graphsVect.size()-1].setQText(label);
-    graphsVect[graphsVect.size()-1].setQColor(color);
-    graphsVect[graphsVect.size()-1].setOriginalHeight(orgHeight);
+    int graphLeftPos=_iSpace*numOfGraphs+_iGraphWidth*numOfGraphs;
+    int graphBottomPos=screenHeight;  //positions of graph
+    int graphWidth= _iGraphWidth;
+    int finalGraphHeight =-(graphHeight*_iScale);
+
+    _qGraph.push_back(QRect(graphLeftPos,graphBottomPos,graphWidth,finalGraphHeight));
+    _qGraph[_qGraph.size()-1].setQText(label);
+    _qGraph[_qGraph.size()-1].setQColor(color);
+    _qGraph[_qGraph.size()-1].setOriginalHeight(orgHeight);
 
     emit layoutSetting();
     update();
@@ -37,11 +47,12 @@ void graphSpace::addGraphs()
 {
     GraphManaging* manager = qobject_cast<GraphManaging* >(sender()->parent());
     int graphHeight=(manager->getGraphHeight()).toInt();
-    QColor color=manager->getGraphColor();
-    QStaticText label=QStaticText(manager->getGraphName());
 
-    addingProcedure(graphHeight,color,label);
-    manager->clearGraphHeight(graphsVect.size()+1);
+    QColor graphColor=manager->getGraphColor();
+    QStaticText graphLabel=QStaticText(manager->getGraphName());
+
+    addingProcedure(graphHeight,graphColor,graphLabel);
+    manager->clearGraphHeight(_qGraph.size()+1); //clear label input window
 
 
 }
@@ -49,38 +60,37 @@ void graphSpace::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setPen(Qt::gray);
-    if(graphsVect.size()!=0) if(graphsVect[graphsVect.size()-1].getQRectangle().x()+_iWidth>this->width()) widthChanging();
+    if(_qGraph.size()!=0) if(_qGraph[_qGraph.size()-1].getQRectangle().x()+_iGraphWidth>this->width()) widthChanging();
     //if last rect is not fitting on screen turn widthChanging which make space between graphs and graph width smaller
     for(int i=0; i<_qLine.size(); i++) painter.drawLine(_qLine[i]);
 
     painter.setPen(Qt::black);
-    for(int i=0; i<graphsVect.size(); i++) painter.fillRect(graphsVect[i].getQRectangle(),graphsVect[i].getQColor());
+    for(int i=0; i<_qGraph.size(); i++) painter.fillRect(_qGraph[i].getQRectangle(),_qGraph[i].getQColor());
 
-    for(int i=0; i<graphsVect.size(); i++) painter.drawRect(graphsVect[i].getQRectangle());
+    for(int i=0; i<_qGraph.size(); i++) painter.drawRect(_qGraph[i].getQRectangle());
 
 }
 
 void graphSpace::refreshGraphs()
 {//function that change width of graph if it`s not fitting on screen
-    int height=QWidget::height();
-    for(int i=0; i<graphsVect.size(); i++)
+    int screenHeight=QWidget::height();
+    for(int i=0; i<_qGraph.size(); i++)
     {
-        int temp=graphsVect[i].height();
-        graphsVect[i].setBottomLeft(QPoint(_iSpace*i+_iWidth*i,height));
-        graphsVect[i].setWidth(_iWidth);
-        graphsVect[i].setHeight(temp);
+        int graphHeight=_qGraph[i].height();
+        _qGraph[i].setBottomLeft(QPoint(_iSpace*i+_iGraphWidth*i,screenHeight));
+        _qGraph[i].setWidth(_iGraphWidth);
+        _qGraph[i].setHeight(graphHeight);
     }
     update();
 }
 void graphSpace::widthChanging()
 {
     int i=0;
-
     if(_iSpace>5) _iSpace/=1.5; //if graphs dont fit on screen make smaller spaces between them if it`s not enough change width
-    while((_iWidth*(graphsVect.size()+1)+_iSpace*(graphsVect.size()+1))>=size().width())
+    while((_iGraphWidth*(_qGraph.size()+1)+_iSpace*(_qGraph.size()+1))>=size().width())
     {
         i++;
-        _iWidth=_iWidth/1.3;// width of rect/2 HERE YOU CAN CHANGE DIVIDER OF WIDTH
+        _iGraphWidth=_iGraphWidth/1.3;// width of rect/2 HERE YOU CAN CHANGE DIVIDER OF WIDTH
         refreshGraphs();
     }
     emit layoutSetting(); //emiting signal that fit labels under graphs to graphs
@@ -116,14 +126,14 @@ void graphSpace::sort(QVector<GRect>& vect,int left, int right)
 }
 void graphSpace::sortFunc()
 {
-    sort(graphsVect,0,graphsVect.size()-1);
-    if(graphsVect.size()>1) emit graphSorted();
+    sort(_qGraph,0,_qGraph.size()-1);
+    if(_qGraph.size()>1) emit graphSorted();
     refreshGraphs();
 }
 
 QVector<GRect> graphSpace::getGRectVect()
 {
-    return graphsVect;
+    return _qGraph;
 }
 double graphSpace::getScale()
 {
@@ -139,20 +149,19 @@ int graphSpace::getSpace()
 {
     return _iSpace;
 }
-void graphSpace::heightChanging(int height)
+void graphSpace::heightChanging(int graphHeight)
 {
     int screenHeight=this->height();
-    int tempHeight=height;
-    while(height>screenHeight) {
-        height=tempHeight;
-
+    int tempGraphHeight=graphHeight;
+    while(graphHeight>screenHeight) {
+        graphHeight=tempGraphHeight;
         _iScale/=2;
-        height*=_iScale;
+        graphHeight*=_iScale;
     }
 
-    for(int i=0; i<graphsVect.size(); i++)
+    for(int i=0; i<_qGraph.size(); i++)
     {
-        graphsVect[i].setHeight(-(graphsVect[i].getOriginalHeight()*_iScale));
+        _qGraph[i].setHeight(-(_qGraph[i].getOriginalHeight()*_iScale));
     }
 
     emit changeScale();
@@ -161,15 +170,15 @@ void graphSpace::heightChanging(int height)
 QString graphSpace::exportToXML()
 {
     QDomDocument document;
-    for(int i=0; i<graphsVect.size(); i++)
+    for(int i=0; i<_qGraph.size(); i++)
     {
         QDomElement root= document.createElement("graph");
         QDomElement label=document.createElement("label");
         QDomElement height=document.createElement("height");
         QDomElement color=document.createElement("color");
-        label.setAttribute("label",graphsVect[i].getQText().text());
-        height.setAttribute("height",graphsVect[i].getOriginalHeight());
-        color.setAttribute("color",graphsVect[i].getQColor().name());
+        label.setAttribute("label",_qGraph[i].getQText().text());
+        height.setAttribute("height",_qGraph[i].getOriginalHeight());
+        color.setAttribute("color",_qGraph[i].getQColor().name());
         document.appendChild(root);
         root.appendChild(label);
         root.appendChild(height);
@@ -179,7 +188,7 @@ QString graphSpace::exportToXML()
 }
 void graphSpace::importFromXML(QFile& file)
 {
-    graphsVect.clear();
+    _qGraph.clear();
     QDomDocument document;
     std::string s=file.readAll().toStdString();
 
@@ -188,7 +197,6 @@ void graphSpace::importFromXML(QFile& file)
         document.setContent(QString::fromStdString(s));
         int pos= s.find("/graph>\n")+8;
          s= s.substr(pos);
-
         QDomElement root=document.firstChildElement();
 
         QStaticText label=QStaticText(listElements(root,"label","label"));
@@ -204,7 +212,6 @@ void graphSpace::importFromXML(QFile& file)
 
         addingProcedure(height,color,label);
     }
-
 }
 
 QString graphSpace::listElements(QDomElement root,QString tagname,QString attribute)

@@ -28,17 +28,17 @@ private slots:
 private:
      void exportToXml(QFile& file);
     void createMenus();
-    GraphManaging* _qGraphManager;
-    QString graphs;
-    Ui::MainWindow *ui;
-    QMenu *File;
-    QHBoxLayout* _qLayoutLeft;
-    QHBoxLayout* _qLayoutRight;
-    QHBoxLayout* _qFinalLayout;
-    graphWindow* _qGraphWindow;
-    QAction *saveAction;
-    QAction *openAction;
-    QAction *sortAction;
+    std::unique_ptr<GraphManaging> _qGraphManager;
+    QString _qGraphs;
+    Ui::MainWindow *_qUi;
+    std::unique_ptr<QMenu>_qFile;
+    std::unique_ptr<QHBoxLayout> _qLayoutLeft;
+    std::unique_ptr<QHBoxLayout> _qLayoutRight;
+    std::unique_ptr<QHBoxLayout> _qFinalLayout;
+    std::unique_ptr<graphWindow> _qGraphWindow;
+    std::unique_ptr<QAction> _qSaveAction;
+    std::unique_ptr<QAction> _qOpenAction;
+    std::unique_ptr<QAction> _qSortAction;
 
 };
 #endif // MAINWINDOW_H

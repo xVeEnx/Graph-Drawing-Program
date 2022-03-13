@@ -18,7 +18,7 @@ void GraphFooter::paintEvent(QPaintEvent *event)
             {
                 t.translate(0,-_gRect[i].width()-_iSpaceBetweenRects);
                 painter.setTransform(t);
-                painter.drawStaticText(0,_iSpaceBetweenRects+_gRect[i].width()/2-_qName[i].size().height()/2,_qName[i]);
+                painter.drawStaticText(0,_iSpaceBetweenRects+_gRect[i].width()/2-_qName[i].size().height()/2,_qName[i]);//draw labels at middle of graph
             }
 
 }

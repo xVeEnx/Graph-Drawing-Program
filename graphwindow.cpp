@@ -22,42 +22,41 @@ graphWindow::graphWindow(QWidget *parent,QSize graphWindowSize) : QFrame(parent)
     setFrameStyle(Box|Plain);
       setLineWidth(3);
 
-      _qLayout =new QHBoxLayout();
-      _qHorizontalLayout=new QHBoxLayout();
-      _qVerticalLayout=new QVBoxLayout();
+      _qLayout =std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
+      _qHorizontalLayout=std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
+      _qVerticalLayout=std::unique_ptr<QVBoxLayout>(new QVBoxLayout());
+      _qGraphWidget=std::unique_ptr<graphSpace>(new graphSpace(nullptr,graphSize));
+      _qScaleWidget=std::unique_ptr<scaleLayout>(new scaleLayout(nullptr,scaleSize,footerFixedSize));
+      _qFooterWidget=std::unique_ptr<GraphFooter>(new GraphFooter(nullptr,footerFixedSize));
 
-      _qGraphWidget=new graphSpace(nullptr,graphSize);
-      _qScaleWidget=new scaleLayout(nullptr,scaleSize,footerFixedSize);
-      _qFooterWidget=new GraphFooter(nullptr,footerFixedSize);
+      QObject::connect(_qGraphWidget.get(),SIGNAL(graphSorted()),
+                      _qFooterWidget.get(),SLOT(setRects()));
+      QObject::connect(_qGraphWidget.get(),SIGNAL(changeScale()),
+                      _qScaleWidget.get(),SLOT(scaleChanging()));
 
-      QObject::connect(_qGraphWidget,SIGNAL(graphSorted()),
-                      _qFooterWidget,SLOT(setRects()));
-      QObject::connect(_qGraphWidget,SIGNAL(changeScale()),
-                      _qScaleWidget,SLOT(scaleChanging()));
-
-     _qHorizontalLayout->addWidget(_qScaleWidget);
+     _qHorizontalLayout->addWidget(_qScaleWidget.get());
      _qVerticalLayout->setSpacing(0);
-     _qVerticalLayout->addWidget(_qGraphWidget);
-     _qVerticalLayout->addWidget(_qFooterWidget);
+     _qVerticalLayout->addWidget(_qGraphWidget.get());
+     _qVerticalLayout->addWidget(_qFooterWidget.get());
 
-     _qLayout->addLayout(_qHorizontalLayout);
-     _qLayout->addLayout(_qVerticalLayout);
+     _qLayout->addLayout(_qHorizontalLayout.get());
+     _qLayout->addLayout(_qVerticalLayout.get());
 
 
 
-    //drawLabels();
-    setLayout(_qLayout);
+
+    setLayout(_qLayout.get());
 }
 
 
 graphSpace *graphWindow::getGraphSpace()
 {
-    return _qGraphWidget;
+    return _qGraphWidget.get();
 }
 
 GraphFooter *graphWindow::getGraphFooter()
 {
-    return _qFooterWidget;
+    return _qFooterWidget.get();
 }
 QString graphWindow::exportToXML()
 {

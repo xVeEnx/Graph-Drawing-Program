@@ -16,13 +16,11 @@ protected:
 public slots:
     void scaleChanging();
 private:
+    void setScale();
     int _iHeight;
     double _iScale;
     QVector<QLine>_qLinia;
     QVector<QStaticText> _qText;
-    scaleLayout* _qScaleLayout;
-    scaleLayout* _qScaleWidget;
-    void setScale();
 };
 
 #endif // SCALELAYOUT_H
