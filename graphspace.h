@@ -39,7 +39,7 @@ void addGraphs();
 void sortFunc();
 
 private:
-QString listElements(QDomElement root,QString tagname,QString attribute);
+QString listElements(const QDomElement& root,QString tagname,QString attribute);
 int Partition(QVector<GRect> &v, int start, int end);
 void addingProcedure(int graphHeight,QColor color,QStaticText label);
 void sort(QVector<GRect>& vect,int left, int right);
@@ -48,7 +48,8 @@ void swapRect(QVector<GRect>& qVec, int i,int j);
 void heightChanging(int graphHeight);
 void widthChanging();
 
-QVector<GRect> _qGraph;
+
+QVector<GRect> _gGraphs;
 QVector<QLine> _qLine;
 int _iGraphWidth;
 double _iScale;

@@ -9,26 +9,25 @@ GraphFooter::GraphFooter(QWidget *parent,QSize size)
 }
 void GraphFooter::paintEvent(QPaintEvent *event)
 {
-    QTransform t;
-    t.rotate(90);
-   // if(_qRect.size()==1)t.translate(0,);
+    QTransform labelTransformation;
+    labelTransformation.rotate(90);
      QPainter painter(this);
      painter.setPen(Qt::gray);
-            for(int i=0; i<_gRect.size(); i++)
+            for(int i=0; i<_gGraphs.size(); i++)
             {
-                t.translate(0,-_gRect[i].width()-_iSpaceBetweenRects);
-                painter.setTransform(t);
-                painter.drawStaticText(0,_iSpaceBetweenRects+_gRect[i].width()/2-_qName[i].size().height()/2,_qName[i]);//draw labels at middle of graph
+                labelTransformation.translate(0,-_gGraphs[i].width()-_iSpaceBetweenRects);
+                painter.setTransform(labelTransformation);
+                painter.drawStaticText(0,_iSpaceBetweenRects+_gGraphs[i].width()/2-_qGraphLabel[i].size().height()/2,_qGraphLabel[i]);//draw labels at middle of graph
             }
 
 }
 void GraphFooter::setRects()
 {
     QPointer<graphSpace> manager=qobject_cast<graphSpace*>(sender());
-    _gRect=manager->getGRectVect();
-    if(_qName.size()<_gRect.size())_qName.push_back(_gRect[_gRect.size()-1].getQText());
+    _gGraphs=manager->getGRectVect();
+    if(_qGraphLabel.size()<_gGraphs.size())_qGraphLabel.push_back(_gGraphs[_gGraphs.size()-1].getQText());
 
-    else for(int i=0;i<_gRect.size();i++)_qName[i]=_gRect[i].getQText();
+    else for(int i=0;i<_gGraphs.size();i++)_qGraphLabel[i]=_gGraphs[i].getQText();
 
     _iSpaceBetweenRects=manager->getSpace();
     update();

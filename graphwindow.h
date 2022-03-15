@@ -31,10 +31,6 @@ std::unique_ptr<QHBoxLayout> _qHorizontalLayout;
 std::unique_ptr<QVBoxLayout> _qVerticalLayout;
 std::unique_ptr<graphSpace>_qGraphWidget;
 std::unique_ptr<GraphFooter> _qFooterWidget;
-QGridLayout *_qMainLayout;
-QMenuBar *menuBar;
-QRect m_rectangle;
-QSignalMapper* _qSignalMapper;
 
 };
 

@@ -14,8 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     ,_qUi(new Ui::MainWindow)
 {
-    int width=QInputDialog::getInt(this,"Podaj szerokość:","Szerokość: (500-1600)",1050,500,1600);
-    int height=QInputDialog::getInt(this,"Podaj wysokość:","Wysokość: (200-850)",600,200,850);
+    setWindowTitle("Graphs");
+    const int width=QInputDialog::getInt(this,"Podaj szerokość:","Szerokość: (500-1600)",1050,500,1600);
+    const int height=QInputDialog::getInt(this,"Podaj wysokość:","Wysokość: (200-850)",600,200,850);
 
     QWidget *widget=new QWidget;
     _qLayoutLeft=std::unique_ptr<QHBoxLayout>(new QHBoxLayout);
@@ -60,7 +61,7 @@ void MainWindow::createMenus()
 }
 void MainWindow::save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("XML Files (*.xml)"));
+    const QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("XML Files (*.xml)"));
     if(fileName!="")
     {
         QFile file(fileName);
@@ -78,7 +79,7 @@ void MainWindow::save()
 }
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("XML Files (*.xml)"));
+    const QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("XML Files (*.xml)"));
     if(fileName!="")
     {
         QFile file(fileName);

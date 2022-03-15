@@ -8,9 +8,9 @@
 #include <QSizePolicy>
 graphWindow::graphWindow(QWidget *parent,QSize graphWindowSize) : QFrame(parent)
 {
-    QSize scaleSize(50,graphWindowSize.height()+100);
-    QSize graphSize(graphWindowSize);
-    QSize footerFixedSize(graphWindowSize.width(),100);
+    const QSize scaleSize(50,graphWindowSize.height()+100);
+    const QSize graphSize(graphWindowSize);
+    const QSize footerFixedSize(graphWindowSize.width(),100);
     if(graphSize.height()+footerFixedSize.height()!=scaleSize.height()
             &&footerFixedSize.height()>=100
             &&graphSize.height()>=500)//footer size has to be >=100scalesizeheight=graphsize.height+footerminsize.height

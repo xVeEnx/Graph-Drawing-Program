@@ -17,9 +17,9 @@ public slots:
     void scaleChanging();
 private:
     void setScale();
-    int _iHeight;
+    int _iScaleLayoutHeight;
     double _iScale;
-    QVector<QLine>_qLinia;
+    QVector<QLine> _qLines;
     QVector<QStaticText> _qText;
 };
 

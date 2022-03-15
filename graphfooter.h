@@ -24,8 +24,8 @@ protected:
 
 
 private:
-    QVector<QStaticText> _qName;
-    QVector<GRect> _gRect;
+    QVector<QStaticText> _qGraphLabel;
+    QVector<GRect> _gGraphs;
     int _iSpaceBetweenRects;
 
 };
