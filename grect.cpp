@@ -1,5 +1,6 @@
 #include "grect.h"
 
+
 GRect::GRect(QRect qrect)
 {
     _qRectangle=qrect;

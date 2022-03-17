@@ -39,6 +39,5 @@ private:
     std::unique_ptr<QAction> _qSaveAction;
     std::unique_ptr<QAction> _qOpenAction;
     std::unique_ptr<QAction> _qSortAction;
-
 };
 #endif // MAINWINDOW_H

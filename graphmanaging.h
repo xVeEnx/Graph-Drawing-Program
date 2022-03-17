@@ -26,8 +26,6 @@ public:
 signals:
 //        void addGraph(int sizeOfGraph);
 private slots:
-
-
 private:
      std::unique_ptr<QPushButton>  _qButtons;
      std::unique_ptr<QFormLayout> _qLabelLayout;

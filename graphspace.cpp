@@ -15,7 +15,6 @@ graphSpace::graphSpace(QWidget *parent,QSize size)
     {
         _qLine.push_back(QLine(0,heightDivision*i,size.width(),heightDivision*i)); //draw "scale" lines
     }
-
 }
 void graphSpace::addingProcedure(int graphHeight,QColor color,QStaticText label)
 {

@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
             _qGraphWindow->getGraphFooter(),SLOT(setRects()));
 
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
 }
 void MainWindow::createMenus()
 {
